@@ -1,0 +1,35 @@
+version: '3.4'
+volumes:
+  sql_data: {}
+
+services:
+  fiap.pos.tech.challenge.api:
+    image: ${DOCKER_REGISTRY-}fiappostechchallengeapi
+    depends_on:
+      - mssqltools
+    build:
+      context: ../
+      dockerfile: Src/Api/Dockerfile
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "SqlServer2019!"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-U sa -P SqlServer2019! -Q 'SELECT NAME FROM SYS.DATABASES'"]
+      interval: 10s
+      retries: 20
+    volumes:
+      - sql_data:/var/opt/mssql
+  mssqltools:
+    image: mcr.microsoft.com/mssql-tools
+    depends_on:
+      - sqlserver
+    volumes:
+      - ../../FIAP-Pos-Tech-Challenge-Infra-Bd/Src/database.sh:/tmp/init-database.sh
+      - ../../FIAP-Pos-Tech-Challenge-Infra-Bd/Src/tech-challenge-mer-1.sql:/tmp/tech-challenge-mer-1.sql
+      - ../../FIAP-Pos-Tech-Challenge-Infra-Bd/Src/tech-challenge-mer-2.sql:/tmp/tech-challenge-mer-2.sql
+    command: /bin/bash ./tmp/init-database.sh  
