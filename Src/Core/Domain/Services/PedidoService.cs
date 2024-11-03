@@ -1,9 +1,7 @@
 ﻿using FIAP.Pos.Tech.Challenge.Domain.Entities;
 using FIAP.Pos.Tech.Challenge.Domain.Interfaces;
-using FIAP.Pos.Tech.Challenge.Domain.Messages;
 using FIAP.Pos.Tech.Challenge.Domain.Models;
 using FIAP.Pos.Tech.Challenge.Domain.Models.Pedido;
-using FIAP.Pos.Tech.Challenge.Domain.ValuesObject;
 using FluentValidation;
 
 namespace FIAP.Pos.Tech.Challenge.Domain.Services
@@ -50,27 +48,29 @@ namespace FIAP.Pos.Tech.Challenge.Domain.Services
         {
             ModelResult ValidatorResult = new ModelResult();
 
-            var entity = await _gateway.FindByIdAsync(webhook.IdPedido);
-
-            if (entity == null)
-                ValidatorResult = ModelResultFactory.NotFoundResult<Pedido>();
-
             if (businessRules != null)
                 ValidatorResult.AddError(businessRules);
 
             if (!ValidatorResult.IsValid)
                 return ValidatorResult;
 
-            entity.DataStatusPagamento = DateTime.Now;
-            entity.StatusPagamento = webhook.StatusPagamento;
+            var entity = await _gateway.FindByIdAsync(webhook.Pedido.IdPedido);
 
-            if (!ValidatorResult.IsValid)
-                return ValidatorResult;
-
-            await _gateway.UpdateAsync(entity);
-            await _gateway.CommitAsync();
-
-            return ModelResultFactory.UpdateSucessResult<Pedido>(entity);
+            if (entity == null)
+            {
+                entity = webhook.Pedido;
+                await _gateway.InsertAsync(entity);
+                await _gateway.CommitAsync();
+                return ModelResultFactory.InsertSucessResult<Pedido>(entity);
+            }
+            else
+            {
+                entity.DataStatusPagamento = DateTime.Now;
+                entity.StatusPagamento = webhook.StatusPagamento;
+                await _gateway.UpdateAsync(entity);
+                await _gateway.CommitAsync();
+                return ModelResultFactory.UpdateSucessResult<Pedido>(entity);
+            }
         }
     }
 }

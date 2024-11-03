@@ -4,7 +4,7 @@ namespace FIAP.Pos.Tech.Challenge.Domain.Models.Pedido
 {
     public class WebhookPagamento
     {
-        public Guid IdPedido { get; set; }
+        public Entities.Pedido Pedido { get; set; }
         public string StatusPagamento { get; set; }
     }
 }

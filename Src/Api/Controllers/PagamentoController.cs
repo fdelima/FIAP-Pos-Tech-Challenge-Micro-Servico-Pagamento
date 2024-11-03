@@ -11,26 +11,26 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
     /// Controller dos Pedidos cadastrados
     /// </summary>
     [Route("api/[Controller]")]
-    public class PedidoController : ApiController
+    public class PagamentoController : ApiController
     {
         private readonly IPedidoController _controller;
 
         /// <summary>
         /// Construtor do controller dos Pedidos cadastrados
         /// </summary>
-        public PedidoController(IPedidoController controller)
+        public PagamentoController(IPedidoController controller)
         {
             _controller = controller;
         }
 
         /// <summary>
-        /// Pedido em preparação.
+        /// Consulta o pagamento do pedido.
         /// </summary>
-        /// <param name="id">Identificador do Pedido cadastrado.</param>
+        /// <param name="id">Identificador do Pedido.</param>
         /// <returns>Retorna o result do Pedido cadastrado.</returns>
         /// <response code="200">Pedido deletada com sucesso.</response>
         /// <response code="400">Erros de validação dos parâmetros para deleção do Pedido.</response>
-        [HttpPatch("{id}/ConsultarPagamento")]
+        [HttpPatch("ConsultarPedido/{id}")]
         [ProducesResponseType(typeof(ModelResult), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(ModelResult), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
