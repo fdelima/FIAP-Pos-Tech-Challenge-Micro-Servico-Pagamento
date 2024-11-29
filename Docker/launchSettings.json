@@ -8,8 +8,7 @@
       "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/api-docs",
       "serviceActions": {
         "fiap.pos.tech.challenge.api": "StartDebugging",
-        "mssqltools": "StartWithoutDebugging",
-        "sqlserver": "StartWithoutDebugging"
+        "mongodb": "StartWithoutDebugging"
       }
     }
   }

@@ -14,7 +14,9 @@ namespace FIAP.Pos.Tech.Challenge.Infra.IoC
                     options.UseInMemoryDatabase("MyInMemoryDatabase"));
             else
                 services.AddDbContext<Context>(options =>
-                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                    options.UseMongoDB(
+                        configuration.GetSection("MongoDb")["ConnectionString"] ?? "",
+                        configuration.GetSection("MongoDb")["DatabaseName"] ?? ""));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using FIAP.Pos.Tech.Challenge.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using MongoDB.EntityFrameworkCore.Extensions;
 
 namespace FIAP.Pos.Tech.Challenge.Infra.Mappings;
 
@@ -8,19 +9,18 @@ internal class NotificacaoMap : IEntityTypeConfiguration<Notificacao>
 {
     public void Configure(EntityTypeBuilder<Notificacao> builder)
     {
-        builder.HasKey(e => e.IdNotificacao).HasName("PK_notificacao_1");
+        builder.ToCollection("notificacao");
 
-        builder.ToTable("notificacao");
+        builder.HasKey(e => e.IdNotificacao);
 
         builder.Property(e => e.IdNotificacao)
             .ValueGeneratedNever()
-            .HasColumnName("id_notificacao");
+            .HasElementName("_id");
         builder.Property(e => e.Data)
-            .HasColumnType("datetime")
-            .HasColumnName("data");
-        builder.Property(e => e.IdDispositivo).HasColumnName("id_dispositivo");
+            .HasElementName("data");
+        builder.Property(e => e.IdDispositivo).HasElementName("id_dispositivo");
         builder.Property(e => e.Mensagem)
             .HasMaxLength(50)
-            .HasColumnName("mensagem");
+            .HasElementName("mensagem");
     }
 }

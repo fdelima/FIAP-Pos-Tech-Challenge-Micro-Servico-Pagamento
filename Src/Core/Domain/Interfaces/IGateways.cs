@@ -16,12 +16,6 @@ namespace FIAP.Pos.Tech.Challenge.Domain.Interfaces
         public IDbContextTransaction BeginTransaction();
 
         /// <summary>
-        /// Adiciona a transação ao contexto do banco de dados.
-        /// </summary>
-        /// <param name="transaction"></param>
-        public void UseTransaction(IDbContextTransaction transaction);
-
-        /// <summary>
         /// Insere o objeto no bd
         /// </summary>
         /// <param name="entity">Objeto relacional do bd mapeado</param>

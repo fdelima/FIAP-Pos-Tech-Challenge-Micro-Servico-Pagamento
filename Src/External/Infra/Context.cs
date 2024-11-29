@@ -1,6 +1,7 @@
 ﻿using FIAP.Pos.Tech.Challenge.Domain.Entities;
 using FIAP.Pos.Tech.Challenge.Infra.Mappings;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.EntityFrameworkCore.Extensions;
 
 namespace FIAP.Pos.Tech.Challenge.Infra
 {
@@ -20,10 +21,15 @@ namespace FIAP.Pos.Tech.Challenge.Infra
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //TODO: Map :: 2 - Adicione sua configuração aqui
+
+            //modelBuilder.Entity<Pedido>().ToCollection("pedido");
+            //modelBuilder.Entity<Notificacao>().ToCollection("notificacao");
+
             modelBuilder.ApplyConfiguration(new NotificacaoMap());
             modelBuilder.ApplyConfiguration(new PedidoMap());
 
             base.OnModelCreating(modelBuilder);
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

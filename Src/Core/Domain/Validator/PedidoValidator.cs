@@ -26,7 +26,7 @@ namespace FIAP.Pos.Tech.Challenge.Domain.Validator
             RuleFor(c => c.Pedido.IdPedido).NotEmpty().WithMessage(ValidationMessages.RequiredField);
             RuleFor(c => c.StatusPagamento)
                 .Must(x => (new List<string>(Enum.GetNames(typeof(enmPedidoStatusPagamento)))).Count(e => e.Equals(x)) > 0)
-                .WithMessage("Precisa ser algum desses status: " + string.Join(",", Enum.GetNames(typeof(enmPedidoStatusPagamento))));
+                .WithMessage("Precisa ser algum desses status de pagamento: " + string.Join(",", Enum.GetNames(typeof(enmPedidoStatusPagamento))));
         }
     }
 }

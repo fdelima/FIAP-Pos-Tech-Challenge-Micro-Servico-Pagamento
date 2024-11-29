@@ -1,7 +1,6 @@
 ﻿using FIAP.Pos.Tech.Challenge.Domain;
 using FIAP.Pos.Tech.Challenge.Domain.Extensions;
 using FIAP.Pos.Tech.Challenge.Domain.Interfaces;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Linq.Expressions;
@@ -43,13 +42,6 @@ namespace FIAP.Pos.Tech.Challenge.Infra.Gateways
         public IDbContextTransaction BeginTransaction()
           => Ctx.Database.BeginTransaction();
 
-        /// <summary>
-        /// Adiciona a transação ao contexto do banco de dados.
-        /// </summary>
-        /// <param name="transaction"></param>
-        /// <remarks>Share connection and transaction :: https://learn.microsoft.com/en-us/ef/core/saving/transactions</remarks>
-        public void UseTransaction(IDbContextTransaction transaction)
-            => Ctx.Database.UseTransaction(transaction.GetDbTransaction());
 
         /// <summary>
         /// Insere o objeto no banco de dados
@@ -163,38 +155,8 @@ namespace FIAP.Pos.Tech.Challenge.Infra.Gateways
             }
             catch (Exception ex)
             {
-                if (ex.InnerException != null)
-                {
-                    if (ex.InnerException is SqlException)
-                        throw new InvalidOperationException(ImproveSqlExceptionMessage((SqlException)ex.InnerException));
-                }
-
-                if (ex is SqlException)
-                {
-                    throw new InvalidOperationException(ImproveSqlExceptionMessage((SqlException)ex));
-                }
-
                 throw;
             }
-        }
-
-        private string ImproveSqlExceptionMessage(SqlException ex)
-        {
-            string deleteMsg = "Existem {0} relacionadas o/a " + typeof(TEntity).Name + ".";
-
-            if (ex.Message.StartsWith("The DELETE statement conflicted"))
-            {
-
-                Type[] types = Util.GetTypesInNamespace("FIAP.Pos.Tech.Challenge.Domain.Entities");
-
-                foreach (Type type in types)
-                {
-                    if (ex.Message.Contains($"\"dbo.{type.Name.ToSnakeCase()}\""))
-                        return string.Format(deleteMsg, type.Name.Replace(typeof(TEntity).Name, ""));
-                }
-            }
-
-            return ex.Message;
         }
 
         /// <summary>

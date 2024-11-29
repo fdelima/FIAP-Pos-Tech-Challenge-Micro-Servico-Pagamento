@@ -33,13 +33,6 @@ namespace FIAP.Pos.Tech.Challenge.Domain.Services
           => _gateway.BeginTransaction();
 
         /// <summary>
-        /// Reposnsável por solicitar ao gateway a adição da transação ao contexto do banco de dados.
-        /// </summary>
-        /// <param name="transaction"></param>
-        public void UseTransaction(IDbContextTransaction transaction)
-          => _gateway.UseTransaction(transaction);
-
-        /// <summary>
         /// Aplica as regras de validação da entidade
         /// </summary>
         /// <param name="entity">Entidade</param>

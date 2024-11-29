@@ -1,6 +1,7 @@
 ﻿using FIAP.Pos.Tech.Challenge.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using MongoDB.EntityFrameworkCore.Extensions;
 
 namespace FIAP.Pos.Tech.Challenge.Infra.Mappings;
 
@@ -8,32 +9,25 @@ internal class PedidoMap : IEntityTypeConfiguration<Pedido>
 {
     public void Configure(EntityTypeBuilder<Pedido> builder)
     {
+        builder.ToCollection("pedido");
         builder.HasKey(e => e.IdPedido);
-
-        builder.ToTable("pedido");
 
         builder.Property(e => e.IdPedido)
             .ValueGeneratedNever()
-            .HasColumnName("id_pedido");
+            .HasElementName("_id");
         builder.Property(e => e.Data)
-            .HasDefaultValueSql("(getdate())")
-            .HasColumnType("datetime")
-            .HasColumnName("data");
+            .HasElementName("data");
         builder.Property(e => e.DataStatusPedido)
-            .HasDefaultValueSql("(getdate())")
-            .HasColumnType("datetime")
-            .HasColumnName("data_status_pedido");
-        builder.Property(e => e.IdCliente).HasColumnName("id_cliente");
-        builder.Property(e => e.IdDispositivo).HasColumnName("id_dispositivo");
+            .HasElementName("data_status_pedido");
+        builder.Property(e => e.IdCliente).HasElementName("id_cliente");
+        builder.Property(e => e.IdDispositivo).HasElementName("id_dispositivo");
         builder.Property(e => e.Status)
             .HasMaxLength(50)
-            .HasColumnName("status");
+            .HasElementName("status");
         builder.Property(e => e.StatusPagamento)
             .HasMaxLength(50)
-            .HasColumnName("status_pagamento");
+            .HasElementName("status_pagamento");
         builder.Property(e => e.DataStatusPagamento)
-            .HasDefaultValueSql("(getdate())")
-            .HasColumnType("datetime")
-            .HasColumnName("data_status_pagamento");
+            .HasElementName("data_status_pagamento");
     }
 }
