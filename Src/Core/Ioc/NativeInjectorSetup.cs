@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.IoC;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Infra.IoC;
-using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.IoC;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.IoC
 {

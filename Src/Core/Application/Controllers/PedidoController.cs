@@ -3,8 +3,6 @@ using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
-using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.MercadoPago;
-using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.Pedido;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -20,24 +18,21 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.Controller
     {
         private readonly IConfiguration _configuration;
         private readonly IMediator _mediator;
-        private readonly IValidator<Domain.Entities.Pedido> _validator;
-        private readonly IValidator<WebhookPagamento> _validatorWebhookPagamento;
+        private readonly IValidator<Pedido> _validator;
 
-        public PedidoController(IConfiguration configuration, IMediator mediator, 
-            IValidator<Domain.Entities.Pedido> validator, 
-            IValidator<WebhookPagamento> validatorWebhookPagamento)
+        public PedidoController(IConfiguration configuration, IMediator mediator,
+            IValidator<Pedido> validator)
         {
             _configuration = configuration;
             _mediator = mediator;
             _validator = validator;
-            _validatorWebhookPagamento = validatorWebhookPagamento;
         }
 
         /// <summary>
         /// Valida a entidade
         /// </summary>
         /// <param name="entity">Entidade</param>
-        public async Task<ModelResult> ValidateAsync(Domain.Entities.Pedido entity)
+        public async Task<ModelResult> ValidateAsync(Pedido entity)
         {
             ModelResult ValidatorResult = new ModelResult(entity);
 
@@ -55,7 +50,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.Controller
         /// Envia a entidade para inserção ao domínio
         /// </summary>
         /// <param name="entity">Entidade</param>
-        public virtual async Task<ModelResult> PostAsync(Domain.Entities.Pedido entity)
+        public virtual async Task<ModelResult> PostAsync(Pedido entity)
         {
             if (entity == null) throw new InvalidOperationException($"Necessário informar o Pedido");
 
@@ -75,7 +70,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.Controller
         /// </summary>
         /// <param name="entity">Entidade</param>
         /// <param name="duplicatedExpression">Expressão para verificação de duplicidade.</param>
-        public virtual async Task<ModelResult> PutAsync(Guid id, Domain.Entities.Pedido entity)
+        public virtual async Task<ModelResult> PutAsync(Guid id, Pedido entity)
         {
             if (entity == null) throw new InvalidOperationException($"Necessário informar o Pedido");
 
@@ -115,7 +110,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.Controller
         /// Retorna as entidades
         /// </summary>
         /// <param name="filter">filtro a ser aplicado</param>
-        public virtual async ValueTask<PagingQueryResult<Domain.Entities.Pedido>> GetItemsAsync(IPagingQueryParam filter, Expression<Func<Domain.Entities.Pedido, object>> sortProp)
+        public virtual async ValueTask<PagingQueryResult<Pedido>> GetItemsAsync(IPagingQueryParam filter, Expression<Func<Pedido, object>> sortProp)
         {
             if (filter == null) throw new InvalidOperationException("Necessário informar o filtro da consulta");
 
@@ -129,7 +124,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.Controller
         /// </summary>
         /// <param name="expression">Condição que filtra os itens a serem retornados</param>
         /// <param name="filter">filtro a ser aplicado</param>
-        public virtual async ValueTask<PagingQueryResult<Domain.Entities.Pedido>> ConsultItemsAsync(IPagingQueryParam filter, Expression<Func<Domain.Entities.Pedido, bool>> expression, Expression<Func<Domain.Entities.Pedido, object>> sortProp)
+        public virtual async ValueTask<PagingQueryResult<Pedido>> ConsultItemsAsync(IPagingQueryParam filter, Expression<Func<Pedido, bool>> expression, Expression<Func<Pedido, object>> sortProp)
         {
             if (filter == null) throw new InvalidOperationException("Necessário informar o filtro da consulta");
 
@@ -146,16 +141,17 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.Controller
             return await _mediator.Send(command);
         }
 
+
         /// <summary>
-        ///  Webhook para notificação de pagamento.
+        ///  Notificação de pedido aguardando pagamento.
         /// </summary>
-        public async Task<ModelResult> WebhookPagamento(WebhookPagamento notificacao, IHeaderDictionary headers)
+        public async Task<ModelResult> ReceberPedido(Pedido notificacao)
         {
-            if (notificacao == null) throw new InvalidOperationException($"Necessário informar a notificacao");
-           
+            if (notificacao == null) throw new InvalidOperationException($"Necessário informar o pedido");
+
             ModelResult ValidatorResult = new ModelResult(notificacao);
 
-            FluentValidation.Results.ValidationResult validations = _validatorWebhookPagamento.Validate(notificacao);
+            FluentValidation.Results.ValidationResult validations = _validator.Validate(notificacao);
             if (!validations.IsValid)
             {
                 ValidatorResult.AddValidations(validations);
@@ -164,14 +160,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.Controller
 
             if (ValidatorResult.IsValid)
             {
-                var warnings = new List<string>();
-
-                if (!headers.ContainsKey("client_id"))
-                    warnings.Add("Consumidor não autorizado e/ou inválido!");
-                else if (!headers["client_id"].Equals(_configuration["WebhookClientAutorized"]))
-                    warnings.Add("Consumidor não autorizado e/ou inválido!");
-
-                PedidoWebhookPagamentoCommand command = new(notificacao, warnings.ToArray());
+                PedidoPostCommand command = new(notificacao);
                 return await _mediator.Send(command);
             }
 
@@ -182,9 +171,18 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.Controller
         ///  Mercado pago recebimento de notificação webhook.
         ///  https://www.mercadopago.com.br/developers/pt/docs/your-integrations/notifications/webhooks#editor_13
         /// </summary>
-        public async Task<ModelResult> MercadoPagoWebhoock(MercadoPagoWebhoock notificacao)
+        public async Task<ModelResult> MercadoPagoWebhoock(MercadoPagoWebhoock notificacao, Guid idPedido, IHeaderDictionary headers)
         {
-            throw new NotImplementedException("Será implementado se der tempo. se estiver vendo isso não deu :( !");
+            if (notificacao == null) throw new InvalidOperationException($"Necessário informar a notificacao");
+
+            var warnings = new List<string>();
+            if (!headers.ContainsKey("client_id"))
+                warnings.Add("Consumidor não autorizado e/ou inválido!");
+            else if (!headers["client_id"].Equals(_configuration["WebhookClientAutorized"]))
+                warnings.Add("Consumidor não autorizado e/ou inválido!");
+
+            MercadoPagoWebhoockCommand command = new(notificacao, idPedido, warnings.ToArray());
+            return await _mediator.Send(command);
         }
     }
 }

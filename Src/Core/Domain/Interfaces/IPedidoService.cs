@@ -1,6 +1,5 @@
 ﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
-using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.Pedido;
 
 namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces
 {
@@ -12,8 +11,14 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces
         Task<ModelResult> ConsultarPagamentoAsync(Guid id);
 
         /// <summary>
-        ///  Webhook para notificação de pagamento.
+        ///  Notificação de pedido aguardando pagamento.
         /// </summary>
-        Task<ModelResult> WebhookPagamento(WebhookPagamento entity, string[]? businessRules);
+        Task<ModelResult> ReceberPedido(Pedido notificacao, string[]? businessRules);
+
+        /// <summary>
+        ///  Mercado pago recebimento de notificação webhook.
+        ///  https://www.mercadopago.com.br/developers/pt/docs/your-integrations/notifications/webhooks#editor_13
+        /// </summary>
+        Task<ModelResult> MercadoPagoWebhoock(MercadoPagoWebhoock notificacao, Guid idPedido, string[]? businessRules);
     }
 }

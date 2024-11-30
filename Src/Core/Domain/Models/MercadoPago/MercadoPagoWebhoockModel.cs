@@ -2,7 +2,7 @@
 
 namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.MercadoPago
 {
-    public class MercadoPagoWebhoock
+    public class MercadoPagoWebhoockModel
     {
         [JsonPropertyName("id")]
         public int Id { get; set; }

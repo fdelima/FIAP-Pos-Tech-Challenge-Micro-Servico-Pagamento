@@ -1,6 +1,7 @@
-﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
-using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.Pedido;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.MercadoPago;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -28,9 +29,9 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Api.Controllers
         /// </summary>
         /// <param name="id">Identificador do Pedido.</param>
         /// <returns>Retorna o result do Pedido cadastrado.</returns>
-        /// <response code="200">Pedido deletada com sucesso.</response>
-        /// <response code="400">Erros de validação dos parâmetros para deleção do Pedido.</response>
-        [HttpPatch("ConsultarPedido/{id}")]
+        /// <response code="200">Pedido encontrado.</response>
+        /// <response code="400">Pedido não encontrado.</response>
+        [HttpPatch("Consultar/Pedido/{id}")]
         [ProducesResponseType(typeof(ModelResult), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(ModelResult), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
@@ -40,27 +41,27 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Api.Controllers
         }
 
         /// <summary>
-        ///  Webhook para notificação de pagamento.
+        ///  Notificação de pedido aguardando pagamento.
         /// </summary>
-        [HttpPost("WebhookPagamento")]
+        [HttpPost("Pedido")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<IActionResult> WebhookPagamento(WebhookPagamento notificacao)
+        public async Task<IActionResult> ReceberPedido(Pedido notificacao)
         {
-            return ExecuteCommand(await _controller.WebhookPagamento(notificacao, Request.Headers));
+            return ExecuteCommand(await _controller.ReceberPedido(notificacao));
         }
-        
+
         /* [ Fazer caso de tempo ]*/
 
         /// <summary>
         ///  Mercado pago recebimento de notificação webhook.
         ///  https://www.mercadopago.com.br/developers/pt/docs/your-integrations/notifications/webhooks#editor_13
         /// </summary>
-        //[HttpPost("MercadoPagoWebhoock")]
-        //[ProducesResponseType((int)HttpStatusCode.OK)]
-        //public async Task<IActionResult> MercadoPagoWebhoock(MercadoPagoWebhoock notificacao)
-        //{
-        //    //Aqui validaria o header aqui caso implemente o desafio
-        //    return ExecuteCommand(await _controller.MercadoPagoWebhoock(notificacao));
-        //}
+        [HttpPost("MercadoPagoWebhoock")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<IActionResult> MercadoPagoWebhoock(MercadoPagoWebhoockModel notificacao)
+        {
+            var mercadoPagoWebhoock = (MercadoPagoWebhoock)notificacao;
+            return ExecuteCommand(await _controller.MercadoPagoWebhoock(mercadoPagoWebhoock, Guid.Parse(notificacao.Data.Id), Request.Headers));
+        }
     }
 }

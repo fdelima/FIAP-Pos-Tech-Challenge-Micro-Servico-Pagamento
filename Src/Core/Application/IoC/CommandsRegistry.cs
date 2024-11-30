@@ -30,7 +30,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.IoC
             services.AddScoped<IRequestHandler<PedidoDeleteCommand, ModelResult>, PedidoDeleteHandler>();
             services.AddScoped<IRequestHandler<PedidoFindByIdCommand, ModelResult>, PedidoFindByIdHandler>();
             services.AddScoped<IRequestHandler<PedidoGetItemsCommand, PagingQueryResult<Pedido>>, PedidoGetItemsHandler>();
-            services.AddScoped<IRequestHandler<PedidoWebhookPagamentoCommand, ModelResult>, PedidoWebhookPagamentoHandler>();
+            services.AddScoped<IRequestHandler<MercadoPagoWebhoockCommand, ModelResult>, MercadoPagoWebhoockHandler>();
             services.AddScoped<IRequestHandler<PedidoConsultarPagamentoCommand, ModelResult>, PedidoConsultarPagamentoHandler>();
         }
     }

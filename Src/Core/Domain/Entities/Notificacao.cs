@@ -1,6 +1,5 @@
 ﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces;
 using System.Linq.Expressions;
-using System.Text.Json.Serialization;
 
 namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities
 {

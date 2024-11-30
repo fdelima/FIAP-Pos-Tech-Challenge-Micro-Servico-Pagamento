@@ -1,7 +1,6 @@
 ﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Infra.Mappings;
 using Microsoft.EntityFrameworkCore;
-using MongoDB.EntityFrameworkCore.Extensions;
 
 namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Infra
 {
@@ -16,6 +15,8 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Infra
 
         public virtual DbSet<Pedido> Pedidos { get; set; }
 
+        public virtual DbSet<MercadoPagoWebhoock> MercadoPagoWebhoocks { get; set; }
+
         #endregion DbSets
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,6 +28,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Infra
 
             modelBuilder.ApplyConfiguration(new NotificacaoMap());
             modelBuilder.ApplyConfiguration(new PedidoMap());
+            modelBuilder.ApplyConfiguration(new MercadoPagoWebhoockMap());
 
             base.OnModelCreating(modelBuilder);
 

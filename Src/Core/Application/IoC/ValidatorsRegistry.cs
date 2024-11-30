@@ -1,5 +1,4 @@
 ﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
-using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.Pedido;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Validator;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +14,6 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.IoC
             //Validators
             services.AddScoped(typeof(IValidator<Notificacao>), typeof(NotificacaoValidator));
             services.AddScoped(typeof(IValidator<Pedido>), typeof(PedidoValidator));
-            services.AddScoped(typeof(IValidator<WebhookPagamento>), typeof(PedidoWebhookPagamentoValidator));
         }
     }
 }

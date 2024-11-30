@@ -5,18 +5,18 @@ using MediatR;
 
 namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Pedido.Handlers
 {
-    internal class PedidoWebhookPagamentoHandler : IRequestHandler<PedidoWebhookPagamentoCommand, ModelResult>
+    internal class MercadoPagoWebhoockHandler : IRequestHandler<MercadoPagoWebhoockCommand, ModelResult>
     {
         private readonly IPedidoService _service;
 
-        public PedidoWebhookPagamentoHandler(IPedidoService service)
+        public MercadoPagoWebhoockHandler(IPedidoService service)
         {
             _service = service;
         }
 
-        public async Task<ModelResult> Handle(PedidoWebhookPagamentoCommand command, CancellationToken cancellationToken = default)
+        public async Task<ModelResult> Handle(MercadoPagoWebhoockCommand command, CancellationToken cancellationToken = default)
         {
-            return await _service.WebhookPagamento(command.Entity, command.BusinessRules);
+            return await _service.MercadoPagoWebhoock(command.Entity, command.IdPedido, command.BusinessRules);
         }
     }
 }

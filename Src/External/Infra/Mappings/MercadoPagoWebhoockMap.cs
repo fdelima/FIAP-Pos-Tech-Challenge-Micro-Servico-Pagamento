@@ -1,0 +1,28 @@
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using MongoDB.EntityFrameworkCore.Extensions;
+
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Infra.Mappings;
+
+internal class MercadoPagoWebhoockMap : IEntityTypeConfiguration<MercadoPagoWebhoock>
+{
+    public void Configure(EntityTypeBuilder<MercadoPagoWebhoock> builder)
+    {
+        builder.ToCollection("mercadopagowebhoock");
+
+        builder.HasKey(e => e.Id);
+
+        builder.Property(e => e.Id)
+            .ValueGeneratedNever()
+            .HasElementName("_id");
+        builder.Property(e => e.LiveMode).HasElementName("live_mode");
+        builder.Property(e => e.Type).HasElementName("type");
+        builder.Property(e => e.DateCreated).HasElementName("date_created");
+        builder.Property(e => e.UserId).HasElementName("user_id");
+        builder.Property(e => e.ApiVersion).HasElementName("api_version");
+        builder.Property(e => e.Action).HasElementName("action");
+        builder.Property(e => e.Data).HasElementName("data");
+
+    }
+}

@@ -2,9 +2,7 @@
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore.Storage;
-using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
-using System.Runtime.ConstrainedExecution;
 
 namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Services
 {

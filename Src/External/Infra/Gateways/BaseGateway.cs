@@ -1,5 +1,4 @@
 ﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain;
-using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Extensions;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;

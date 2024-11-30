@@ -1,7 +1,8 @@
 ﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Messages;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
-using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.Pedido;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.ValuesObject;
 using FluentValidation;
 
 namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Services
@@ -9,6 +10,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Services
     public class PedidoService : BaseService<Pedido>, IPedidoService
     {
         protected readonly IGateways<Notificacao> _notificacaoGateway;
+        protected readonly IGateways<MercadoPagoWebhoock> _mercadoPagoWebhoockGateway;
 
         /// <summary>
         /// Lógica de negócio referentes ao pedido.
@@ -16,15 +18,15 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Services
         /// <param name="gateway">Gateway de pedido a ser injetado durante a execução</param>
         /// <param name="validator">abstração do validador a ser injetado durante a execução</param>
         /// <param name="notificacaoGateway">Gateway de notificação a ser injetado durante a execução</param>
-        /// <param name="dispositivoGateway">Gateway de dispositivo a ser injetado durante a execução</param>
-        /// <param name="clienteGateway">Gateway de cliente a ser injetado durante a execução</param>
-        /// <param name="produtoGateway">Gateway de produto a ser injetado durante a execução</param>
+        /// <param name="MercadoPagoWebhoockGateway">Gateway de MercadoPagoWebhoock a ser injetado durante a execução</param>
         public PedidoService(IGateways<Pedido> gateway,
             IValidator<Pedido> validator,
-            IGateways<Notificacao> notificacaoGateway)
+            IGateways<Notificacao> notificacaoGateway,
+            IGateways<MercadoPagoWebhoock> mercadoPagoWebhoockGateway)
             : base(gateway, validator)
         {
             _notificacaoGateway = notificacaoGateway;
+            _mercadoPagoWebhoockGateway = mercadoPagoWebhoockGateway;
         }
 
 
@@ -44,7 +46,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Services
         /// <summary>
         ///  Regra de Webhook para notificação de pagamento.
         /// </summary>
-        public async Task<ModelResult> WebhookPagamento(WebhookPagamento webhook, string[]? businessRules)
+        public async Task<ModelResult> ReceberPedido(Pedido notificacao, string[]? businessRules)
         {
             ModelResult ValidatorResult = new ModelResult();
 
@@ -54,23 +56,57 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Services
             if (!ValidatorResult.IsValid)
                 return ValidatorResult;
 
-            var entity = await _gateway.FindByIdAsync(webhook.Pedido.IdPedido);
+            var entity = await _gateway.FindByIdAsync(notificacao.IdPedido);
 
             if (entity == null)
             {
-                entity = webhook.Pedido;
-                await _gateway.InsertAsync(entity);
+                entity = notificacao;
+                await _gateway.InsertAsync(notificacao);
                 await _gateway.CommitAsync();
                 return ModelResultFactory.InsertSucessResult<Pedido>(entity);
             }
             else
             {
-                entity.DataStatusPagamento = DateTime.Now;
-                entity.StatusPagamento = webhook.StatusPagamento;
+                entity = notificacao;
                 await _gateway.UpdateAsync(entity);
                 await _gateway.CommitAsync();
                 return ModelResultFactory.UpdateSucessResult<Pedido>(entity);
             }
+        }
+
+        public async Task<ModelResult> MercadoPagoWebhoock(MercadoPagoWebhoock notificacao, Guid idPedido, string[]? businessRules)
+        {
+            ModelResult ValidatorResult = new ModelResult();
+
+            if (businessRules != null)
+                ValidatorResult.AddError(businessRules);
+
+            if (!ValidatorResult.IsValid)
+                return ValidatorResult;
+
+            var entity = await _gateway.FindByIdAsync(idPedido);
+
+            if (entity != null)
+            {
+                entity.StatusPagamento = enmPedidoStatusPagamento.APROVADO.ToString();
+                entity.DataStatusPagamento = DateTime.Now;
+                await _gateway.UpdateAsync(entity);
+                await _gateway.CommitAsync();                
+            }
+            else
+            {
+                var notFound = new Notificacao
+                {
+                    Data = DateTime.Now,
+                    Mensagem = $"{idPedido}: {BusinessMessages.NotFoundError<Pedido>()}"
+                };
+                await _notificacaoGateway.InsertAsync(notFound);
+                await _gateway.CommitAsync();
+            }
+
+            await _mercadoPagoWebhoockGateway.InsertAsync(notificacao);
+            await _mercadoPagoWebhoockGateway.CommitAsync();
+            return ModelResultFactory.InsertSucessResult<MercadoPagoWebhoock>(notificacao);
         }
     }
 }
