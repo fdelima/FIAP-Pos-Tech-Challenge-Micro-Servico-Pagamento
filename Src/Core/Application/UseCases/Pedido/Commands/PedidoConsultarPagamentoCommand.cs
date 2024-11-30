@@ -3,7 +3,7 @@ using MediatR;
 
 namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Pedido.Commands
 {
-    internal class PedidoConsultarPagamentoCommand : IRequest<ModelResult>
+    public class PedidoConsultarPagamentoCommand : IRequest<ModelResult>
     {
         public PedidoConsultarPagamentoCommand(Guid id, string[]? businessRules = null)
         {

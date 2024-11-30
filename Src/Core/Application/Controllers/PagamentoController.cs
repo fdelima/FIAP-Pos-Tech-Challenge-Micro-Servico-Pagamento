@@ -1,4 +1,5 @@
-﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Pedido.Commands;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.MercadoPago.Commands;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Pedido.Commands;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
@@ -12,13 +13,13 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.Controller
     /// <summary>
     /// Regras da aplicação referente ao pedido
     /// </summary>
-    public class PedidoController : IPedidoController
+    public class PagamentoController : IPedidoController
     {
         private readonly IConfiguration _configuration;
         private readonly IMediator _mediator;
         private readonly IValidator<Pedido> _validator;
 
-        public PedidoController(IConfiguration configuration, IMediator mediator,
+        public PagamentoController(IConfiguration configuration, IMediator mediator,
             IValidator<Pedido> validator)
         {
             _configuration = configuration;

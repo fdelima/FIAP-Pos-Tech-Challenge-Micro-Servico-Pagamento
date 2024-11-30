@@ -9,13 +9,15 @@ internal class MercadoPagoWebhoockMap : IEntityTypeConfiguration<MercadoPagoWebh
 {
     public void Configure(EntityTypeBuilder<MercadoPagoWebhoock> builder)
     {
-        builder.ToCollection("mercadopagowebhoock");
+        builder.ToCollection("pagamento");
 
         builder.HasKey(e => e.Id);
 
         builder.Property(e => e.Id)
             .ValueGeneratedNever()
             .HasElementName("_id");
+        builder.Property(e => e.Origem).HasElementName("_origem");
+        builder.Property(e => e.IdMercadoPago).HasElementName("id");
         builder.Property(e => e.LiveMode).HasElementName("live_mode");
         builder.Property(e => e.Type).HasElementName("type");
         builder.Property(e => e.DateCreated).HasElementName("date_created");

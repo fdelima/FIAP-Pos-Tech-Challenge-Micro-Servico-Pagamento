@@ -2,9 +2,9 @@
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
 using MediatR;
 
-namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Pedido.Commands
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.MercadoPago.Commands
 {
-    internal class MercadoPagoWebhoockCommand : IRequest<ModelResult>
+    public class MercadoPagoWebhoockCommand : IRequest<ModelResult>
     {
         public MercadoPagoWebhoockCommand(MercadoPagoWebhoock entity,
             Guid idPedido,

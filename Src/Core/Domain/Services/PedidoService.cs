@@ -87,7 +87,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Services
                 entity.StatusPagamento = enmPedidoStatusPagamento.APROVADO.ToString();
                 entity.DataStatusPagamento = DateTime.Now;
                 await _gateway.UpdateAsync(entity);
-                await _gateway.CommitAsync();                
+                await _gateway.CommitAsync();
             }
             else
             {

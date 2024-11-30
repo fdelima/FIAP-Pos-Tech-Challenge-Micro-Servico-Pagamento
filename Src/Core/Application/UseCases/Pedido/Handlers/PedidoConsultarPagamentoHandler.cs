@@ -5,7 +5,7 @@ using MediatR;
 
 namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Pedido.Handlers
 {
-    internal class PedidoConsultarPagamentoHandler : IRequestHandler<PedidoConsultarPagamentoCommand, ModelResult>
+    public class PedidoConsultarPagamentoHandler : IRequestHandler<PedidoConsultarPagamentoCommand, ModelResult>
     {
         private readonly IPedidoService _service;
 

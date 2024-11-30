@@ -1,13 +1,11 @@
-﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces;
-using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.MercadoPago;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.MercadoPago;
 using Newtonsoft.Json;
-using System.Linq.Expressions;
 
 namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities
 {
-    public class MercadoPagoWebhoock : IDomainEntity
+    public class MercadoPagoWebhoock : Pagamento
     {
-        public int Id { get; set; }
+        public int IdMercadoPago { get; set; }
 
         public bool LiveMode { get; set; }
 
@@ -23,16 +21,6 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities
 
         public string Data { get; set; }
 
-        public Expression<Func<IDomainEntity, bool>> AlterDuplicatedRule()
-        {
-            throw new NotImplementedException("Entidade externa não necessário implementação");
-        }
-
-        public Expression<Func<IDomainEntity, bool>> InsertDuplicatedRule()
-        {
-            throw new NotImplementedException("Entidade externa não necessário implementação");
-        }
-
         public static explicit operator MercadoPagoWebhoock(MercadoPagoWebhoockModel model)
         {
             if (model == null)
@@ -40,7 +28,9 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities
 
             return new MercadoPagoWebhoock
             {
-                Id = model.Id,
+                Id = Guid.NewGuid(),
+                Origem = "Mercado Pago",
+                IdMercadoPago = model.Id,
                 LiveMode = model.LiveMode,
                 Type = model.Type,
                 DateCreated = model.DateCreated,
