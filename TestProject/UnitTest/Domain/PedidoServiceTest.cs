@@ -38,12 +38,11 @@ namespace TestProject.UnitTest.Domain
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, true, 3)]
-        public async Task InserirComDadosValidos(Guid idDispositivo, Guid idCliente,
+        public async Task InserirComDadosValidos(Guid idPedido, Guid idDispositivo, Guid idCliente,
             DateTime data, string status, DateTime dataStatusPedido,
             string statusPagamento, DateTime dataStatusPagamento)
         {
             ///Arrange            
-            var idPedido = Guid.NewGuid();
             var pedido = new Pedido
             {
                 IdPedido = idPedido,
@@ -71,12 +70,11 @@ namespace TestProject.UnitTest.Domain
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, false, 3)]
-        public async Task InserirComDadosInvalidos(Guid idDispositivo, Guid idCliente,
+        public async Task InserirComDadosInvalidos(Guid idPedido, Guid idDispositivo, Guid idCliente,
             DateTime data, string status, DateTime dataStatusPedido,
             string statusPagamento, DateTime dataStatusPagamento)
         {
             ///Arrange            
-            var idPedido = Guid.NewGuid();
             var pedido = new Pedido
             {
                 IdDispositivo = idDispositivo,
@@ -359,17 +357,11 @@ namespace TestProject.UnitTest.Domain
             switch (tipo)
             {
                 case enmTipo.Inclusao:
+                case enmTipo.Alteracao:
                     if (dadosValidos)
                         return PedidoMock.ObterDadosValidos(quantidade);
                     else
                         return PedidoMock.ObterDadosInvalidos(quantidade);
-                case enmTipo.Alteracao:
-                    if (dadosValidos)
-                        return PedidoMock.ObterDadosValidos(quantidade)
-                            .Select(i => new object[] { Guid.NewGuid() }.Concat(i).ToArray());
-                    else
-                        return PedidoMock.ObterDadosInvalidos(quantidade)
-                            .Select(i => new object[] { Guid.NewGuid() }.Concat(i).ToArray());
                 case enmTipo.Consulta:
                     if (dadosValidos)
                         return PedidoMock.ObterDadosConsultaValidos(quantidade);

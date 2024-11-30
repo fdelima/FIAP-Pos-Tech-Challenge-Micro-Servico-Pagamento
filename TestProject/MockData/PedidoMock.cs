@@ -21,6 +21,7 @@ namespace TestProject.MockData
                 {
                     Guid.NewGuid(),
                     Guid.NewGuid(),
+                    Guid.NewGuid(),
                     DateTime.Now,
                     enmPedidoStatus.RECEBIDO.ToString(),
                     DateTime.Now,
@@ -37,6 +38,7 @@ namespace TestProject.MockData
             for (var index = 1; index <= quantidade; index++)
                 yield return new object[]
                 {
+                    Guid.Empty,
                     Guid.Empty,
                     Guid.Empty,
                     DateTime.Now,

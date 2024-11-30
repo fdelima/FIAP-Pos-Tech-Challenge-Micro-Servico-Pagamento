@@ -9,7 +9,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.IoC
         public static void RegisterAppControllers(this IServiceCollection services)
         {
             //Controlles
-            services.AddScoped(typeof(IPedidoController), typeof(PagamentoController));
+            services.AddScoped(typeof(IPagamentoController), typeof(PagamentoController));
         }
     }
 }

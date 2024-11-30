@@ -1,13 +1,10 @@
-﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Pedido.Commands;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Pedido.Handlers;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
-using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Extensions;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
 using NSubstitute;
-using System.Linq.Expressions;
 using TestProject.MockData;
-using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Pedido.Commands;
-using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Pedido.Handlers;
 
 namespace TestProject.UnitTest.Aplication
 {
@@ -31,12 +28,11 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, true, 3)]
-        public async Task InserirComDadosValidos(Guid idDispositivo, Guid idCliente,
+        public async Task InserirComDadosValidos(Guid idPedido, Guid idDispositivo, Guid idCliente,
             DateTime data, string status, DateTime dataStatusPedido,
             string statusPagamento, DateTime dataStatusPagamento)
         {
             ///Arrange            
-            var idPedido = Guid.NewGuid();
             var pedido = new Pedido
             {
                 IdPedido = idPedido,
@@ -53,7 +49,7 @@ namespace TestProject.UnitTest.Aplication
             var command = new ReceberPedidoCommand(pedido);
 
             //Mockando retorno do serviço de domínio.
-            _service.InsertAsync(pedido)
+            _service.ReceberPedido(pedido)
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult(pedido)));
 
             //Act
@@ -69,12 +65,11 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, false, 3)]
-        public async Task InserirComDadosInvalidos(Guid idDispositivo, Guid idCliente,
+        public async Task InserirComDadosInvalidos(Guid idPedido, Guid idDispositivo, Guid idCliente,
             DateTime data, string status, DateTime dataStatusPedido,
             string statusPagamento, DateTime dataStatusPagamento)
         {
             ///Arrange    
-            var idPedido = Guid.NewGuid();
             var pedido = new Pedido
             {
                 IdPedido = idPedido,
@@ -91,8 +86,8 @@ namespace TestProject.UnitTest.Aplication
             var command = new ReceberPedidoCommand(pedido);
 
             //Mockando retorno do serviço de domínio.
-            _service.InsertAsync(pedido)
-                .Returns(Task.FromResult(ModelResultFactory.SucessResult(pedido)));
+            _service.ReceberPedido(pedido)
+                .Returns(Task.FromResult(ModelResultFactory.DuplicatedResult<Pedido>()));
 
             //Act
             var handler = new ReceberPedidoHandler(_service);
@@ -128,7 +123,7 @@ namespace TestProject.UnitTest.Aplication
             var command = new PedidoConsultarPagamentoCommand(idPedido);
 
             //Mockando retorno do serviço de domínio.
-            _service.FindByIdAsync(idPedido)
+            _service.ConsultarPagamentoAsync(idPedido)
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult(pedido)));
 
             //Act
@@ -150,17 +145,11 @@ namespace TestProject.UnitTest.Aplication
             switch (tipo)
             {
                 case enmTipo.Inclusao:
+                case enmTipo.Alteracao:
                     if (dadosValidos)
                         return PedidoMock.ObterDadosValidos(quantidade);
                     else
                         return PedidoMock.ObterDadosInvalidos(quantidade);
-                case enmTipo.Alteracao:
-                    if (dadosValidos)
-                        return PedidoMock.ObterDadosValidos(quantidade)
-                            .Select(i => new object[] { Guid.NewGuid() }.Concat(i).ToArray());
-                    else
-                        return PedidoMock.ObterDadosInvalidos(quantidade)
-                            .Select(i => new object[] { Guid.NewGuid() }.Concat(i).ToArray());
                 case enmTipo.Consulta:
                     if (dadosValidos)
                         return PedidoMock.ObterDadosConsultaValidos(quantidade);

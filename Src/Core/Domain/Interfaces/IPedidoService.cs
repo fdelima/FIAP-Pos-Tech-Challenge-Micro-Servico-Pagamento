@@ -13,7 +13,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces
         /// <summary>
         ///  Notificação de pedido aguardando pagamento.
         /// </summary>
-        Task<ModelResult> ReceberPedido(Pedido notificacao, string[]? businessRules);
+        Task<ModelResult> ReceberPedido(Pedido notificacao, string[]? businessRules = null);
 
         /// <summary>
         ///  Mercado pago recebimento de notificação webhook.

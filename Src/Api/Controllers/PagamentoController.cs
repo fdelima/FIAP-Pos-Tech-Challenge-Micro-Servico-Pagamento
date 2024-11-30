@@ -14,12 +14,12 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Api.Controllers
     [Route("api/[Controller]")]
     public class PagamentoController : ApiController
     {
-        private readonly IPedidoController _controller;
+        private readonly IPagamentoController _controller;
 
         /// <summary>
         /// Construtor do controller dos Pedidos cadastrados
         /// </summary>
-        public PagamentoController(IPedidoController controller)
+        public PagamentoController(IPagamentoController controller)
         {
             _controller = controller;
         }

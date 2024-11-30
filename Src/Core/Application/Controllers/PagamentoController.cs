@@ -13,7 +13,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.Controller
     /// <summary>
     /// Regras da aplicação referente ao pedido
     /// </summary>
-    public class PagamentoController : IPedidoController
+    public class PagamentoController : IPagamentoController
     {
         private readonly IConfiguration _configuration;
         private readonly IMediator _mediator;
@@ -43,25 +43,6 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.Controller
             }
 
             return await Task.FromResult(ValidatorResult);
-        }
-
-        /// <summary>
-        /// Envia a entidade para inserção ao domínio
-        /// </summary>
-        /// <param name="entity">Entidade</param>
-        public virtual async Task<ModelResult> PostAsync(Pedido entity)
-        {
-            if (entity == null) throw new InvalidOperationException($"Necessário informar o Pedido");
-
-            ModelResult ValidatorResult = await ValidateAsync(entity);
-
-            if (ValidatorResult.IsValid)
-            {
-                ReceberPedidoCommand command = new(entity);
-                return await _mediator.Send(command);
-            }
-
-            return ValidatorResult;
         }
 
         /// <summary>
