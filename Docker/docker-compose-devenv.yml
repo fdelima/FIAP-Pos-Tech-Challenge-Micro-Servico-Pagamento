@@ -4,7 +4,7 @@ volumes:
 
 services:
   FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.api:
-    image: ${DOCKER_REGISTRY-}fiappostechchallengeapi
+    image: ${DOCKER_REGISTRY-}fiappostechchallengemicroservicopagamentoapi
     depends_on:
       - mongodb
     build:
