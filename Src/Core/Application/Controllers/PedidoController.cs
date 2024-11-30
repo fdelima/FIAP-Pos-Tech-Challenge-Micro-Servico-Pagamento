@@ -1,5 +1,4 @@
 ﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Pedido.Commands;
-using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
@@ -7,7 +6,6 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using System.Linq.Expressions;
 
 namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.Controllers
 {
@@ -58,78 +56,11 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.Controller
 
             if (ValidatorResult.IsValid)
             {
-                PedidoPostCommand command = new(entity);
+                ReceberPedidoCommand command = new(entity);
                 return await _mediator.Send(command);
             }
 
             return ValidatorResult;
-        }
-
-        /// <summary>
-        /// Envia a entidade para atualização ao domínio
-        /// </summary>
-        /// <param name="entity">Entidade</param>
-        /// <param name="duplicatedExpression">Expressão para verificação de duplicidade.</param>
-        public virtual async Task<ModelResult> PutAsync(Guid id, Pedido entity)
-        {
-            if (entity == null) throw new InvalidOperationException($"Necessário informar o Pedido");
-
-            ModelResult ValidatorResult = await ValidateAsync(entity);
-
-            if (ValidatorResult.IsValid)
-            {
-                PedidoPutCommand command = new(id, entity);
-                return await _mediator.Send(command);
-            }
-
-            return ValidatorResult;
-        }
-
-        /// <summary>
-        /// Envia a entidade para deleção ao domínio
-        /// </summary>
-        /// <param name="entity">Entidade</param>
-        public virtual async Task<ModelResult> DeleteAsync(Guid id)
-        {
-            PedidoDeleteCommand command = new(id);
-            return await _mediator.Send(command);
-        }
-
-        /// <summary>
-        /// Retorna a entidade
-        /// </summary>
-        /// <param name="entity">Entidade</param>
-        public virtual async Task<ModelResult> FindByIdAsync(Guid id)
-        {
-            PedidoFindByIdCommand command = new(id);
-            return await _mediator.Send(command);
-        }
-
-
-        /// <summary>
-        /// Retorna as entidades
-        /// </summary>
-        /// <param name="filter">filtro a ser aplicado</param>
-        public virtual async ValueTask<PagingQueryResult<Pedido>> GetItemsAsync(IPagingQueryParam filter, Expression<Func<Pedido, object>> sortProp)
-        {
-            if (filter == null) throw new InvalidOperationException("Necessário informar o filtro da consulta");
-
-            PedidoGetItemsCommand command = new(filter, sortProp);
-            return await _mediator.Send(command);
-        }
-
-
-        /// <summary>
-        /// Retorna as entidades que atendem a expressão de filtro 
-        /// </summary>
-        /// <param name="expression">Condição que filtra os itens a serem retornados</param>
-        /// <param name="filter">filtro a ser aplicado</param>
-        public virtual async ValueTask<PagingQueryResult<Pedido>> ConsultItemsAsync(IPagingQueryParam filter, Expression<Func<Pedido, bool>> expression, Expression<Func<Pedido, object>> sortProp)
-        {
-            if (filter == null) throw new InvalidOperationException("Necessário informar o filtro da consulta");
-
-            PedidoGetItemsCommand command = new(filter, expression, sortProp);
-            return await _mediator.Send(command);
         }
 
         /// <summary>
@@ -160,7 +91,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.Controller
 
             if (ValidatorResult.IsValid)
             {
-                PedidoPostCommand command = new(notificacao);
+                ReceberPedidoCommand command = new(notificacao);
                 return await _mediator.Send(command);
             }
 

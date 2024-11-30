@@ -60,17 +60,13 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Services
 
             if (entity == null)
             {
-                entity = notificacao;
                 await _gateway.InsertAsync(notificacao);
                 await _gateway.CommitAsync();
                 return ModelResultFactory.InsertSucessResult<Pedido>(entity);
             }
             else
             {
-                entity = notificacao;
-                await _gateway.UpdateAsync(entity);
-                await _gateway.CommitAsync();
-                return ModelResultFactory.UpdateSucessResult<Pedido>(entity);
+                return ModelResultFactory.DuplicatedResult<Pedido>();
             }
         }
 

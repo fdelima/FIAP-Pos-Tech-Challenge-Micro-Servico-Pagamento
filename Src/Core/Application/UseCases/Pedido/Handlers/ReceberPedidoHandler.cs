@@ -5,18 +5,18 @@ using MediatR;
 
 namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Pedido.Handlers
 {
-    internal class PedidoDeleteHandler : IRequestHandler<PedidoDeleteCommand, ModelResult>
+    internal class ReceberPedidoHandler : IRequestHandler<ReceberPedidoCommand, ModelResult>
     {
         private readonly IPedidoService _service;
 
-        public PedidoDeleteHandler(IPedidoService service)
+        public ReceberPedidoHandler(IPedidoService service)
         {
             _service = service;
         }
 
-        public async Task<ModelResult> Handle(PedidoDeleteCommand command, CancellationToken cancellationToken = default)
+        public async Task<ModelResult> Handle(ReceberPedidoCommand command, CancellationToken cancellationToken = default)
         {
-            return await _service.DeleteAsync(command.Id, command.BusinessRules);
+            return await _service.ReceberPedido(command.Entity, command.BusinessRules);
         }
     }
 }

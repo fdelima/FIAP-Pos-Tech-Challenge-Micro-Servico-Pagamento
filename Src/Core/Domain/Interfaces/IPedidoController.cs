@@ -4,8 +4,19 @@ using Microsoft.AspNetCore.Http;
 
 namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces
 {
-    public interface IPedidoController : IController<Pedido>
+    public interface IPedidoController
     {
+        /// <summary>
+        /// Valida o objeto
+        /// </summary>
+        /// <param name="entity">Objeto relacional do bd mapeado</param>
+        Task<ModelResult> ValidateAsync(Pedido entity);
+
+        /// <summary>
+        /// Insere o objeto
+        /// </summary>
+        /// <param name="entity">Objeto relacional do bd mapeado</param>
+        Task<ModelResult> PostAsync(Pedido entity);
         /// <summary>
         /// Consulta o pagamento de um pedido.
         /// </summary> 
