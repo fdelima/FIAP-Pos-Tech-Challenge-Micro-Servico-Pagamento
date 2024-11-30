@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace FIAP.Pos.Tech.Challenge.Api
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Api
 {
     public static class ModelValidations
     {

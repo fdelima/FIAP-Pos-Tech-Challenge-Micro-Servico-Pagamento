@@ -1,9 +1,9 @@
-﻿using FIAP.Pos.Tech.Challenge.Application.UseCases.Notificacao.Commands;
-using FIAP.Pos.Tech.Challenge.Domain;
-using FIAP.Pos.Tech.Challenge.Domain.Interfaces;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Notificacao.Commands;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces;
 using MediatR;
 
-namespace FIAP.Pos.Tech.Challenge.Application.UseCases.Notificacao.Handlers
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Notificacao.Handlers
 {
     internal class NotificacaoGetItemsHandler : IRequestHandler<NotificacaoGetItemsCommand, PagingQueryResult<Domain.Entities.Notificacao>>
     {

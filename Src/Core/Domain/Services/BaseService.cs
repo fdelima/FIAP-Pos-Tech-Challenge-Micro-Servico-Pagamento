@@ -1,12 +1,12 @@
-﻿using FIAP.Pos.Tech.Challenge.Domain.Interfaces;
-using FIAP.Pos.Tech.Challenge.Domain.Models;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Runtime.ConstrainedExecution;
 
-namespace FIAP.Pos.Tech.Challenge.Domain.Services
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Services
 {
     /// <summary>
     /// Base da Lógica de negócio e regras da aplicação.

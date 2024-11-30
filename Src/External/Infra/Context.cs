@@ -1,9 +1,9 @@
-﻿using FIAP.Pos.Tech.Challenge.Domain.Entities;
-using FIAP.Pos.Tech.Challenge.Infra.Mappings;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Infra.Mappings;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.EntityFrameworkCore.Extensions;
 
-namespace FIAP.Pos.Tech.Challenge.Infra
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Infra
 {
     public partial class Context : DbContext
     {

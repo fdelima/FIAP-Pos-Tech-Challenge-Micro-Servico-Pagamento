@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 
-namespace FIAP.Pos.Tech.Challenge.Api
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Api
 {
     public class App
     {

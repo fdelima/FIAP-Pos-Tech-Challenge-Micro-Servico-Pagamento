@@ -1,10 +1,10 @@
-﻿using FIAP.Pos.Tech.Challenge.Domain.Entities;
-using FIAP.Pos.Tech.Challenge.Domain.Models.Pedido;
-using FIAP.Pos.Tech.Challenge.Domain.Validator;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.Pedido;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Validator;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FIAP.Pos.Tech.Challenge.Application.IoC
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.IoC
 {
     internal static class ValidatorsRegistry
     {

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
@@ -7,13 +7,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<!-- Somente para teste remover -->
 		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.36" />
+		<PackageReference Include="MongoDB.EntityFrameworkCore" Version="8.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Application\FIAP.Pos.Tech.Challenge.Application.csproj" />
-		<ProjectReference Include="..\..\External\Infra\FIAP.Pos.Tech.Challenge.Infra.csproj" />
+		<ProjectReference Include="..\..\Core\Domain\FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.csproj" />
 	</ItemGroup>
 
 </Project>

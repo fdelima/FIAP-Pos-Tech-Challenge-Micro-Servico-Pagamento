@@ -1,10 +1,10 @@
-﻿using FIAP.Pos.Tech.Challenge.Domain.Entities;
-using FIAP.Pos.Tech.Challenge.Domain.Models;
-using FIAP.Pos.Tech.Challenge.Domain.Models.MercadoPago;
-using FIAP.Pos.Tech.Challenge.Domain.Models.Pedido;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.MercadoPago;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.Pedido;
 using Microsoft.AspNetCore.Http;
 
-namespace FIAP.Pos.Tech.Challenge.Domain.Interfaces
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces
 {
     public interface IPedidoController : IController<Pedido>
     {

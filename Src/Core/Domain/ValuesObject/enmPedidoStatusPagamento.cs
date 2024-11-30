@@ -1,4 +1,4 @@
-﻿namespace FIAP.Pos.Tech.Challenge.Domain.ValuesObject;
+﻿namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.ValuesObject;
 
 public enum enmPedidoStatusPagamento
 {

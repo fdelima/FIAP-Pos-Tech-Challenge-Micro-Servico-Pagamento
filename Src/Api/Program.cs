@@ -1,6 +1,6 @@
-using FIAP.Pos.Tech.Challenge.Api;
-using FIAP.Pos.Tech.Challenge.Domain.Models;
-using FIAP.Pos.Tech.Challenge.IoC;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Api;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.IoC;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 

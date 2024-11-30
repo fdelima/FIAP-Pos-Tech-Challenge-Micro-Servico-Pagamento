@@ -1,7 +1,7 @@
-﻿using FIAP.Pos.Tech.Challenge.Domain.Models;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FIAP.Pos.Tech.Challenge.Api.Controllers
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Api.Controllers
 {
     /// <summary>
     /// Classe abstrata base para impelmentação dos controllers

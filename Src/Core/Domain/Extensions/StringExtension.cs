@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace FIAP.Pos.Tech.Challenge.Domain.Extensions
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Extensions
 {
     public static class StringExtension
     {

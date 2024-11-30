@@ -1,15 +1,15 @@
-﻿using FIAP.Pos.Tech.Challenge.Application.UseCases.Notificacao.Commands;
-using FIAP.Pos.Tech.Challenge.Application.UseCases.Notificacao.Handlers;
-using FIAP.Pos.Tech.Challenge.Application.UseCases.Pedido.Commands;
-using FIAP.Pos.Tech.Challenge.Application.UseCases.Pedido.Handlers;
-using FIAP.Pos.Tech.Challenge.Domain;
-using FIAP.Pos.Tech.Challenge.Domain.Entities;
-using FIAP.Pos.Tech.Challenge.Domain.Models;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Notificacao.Commands;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Notificacao.Handlers;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Pedido.Commands;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Pedido.Handlers;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace FIAP.Pos.Tech.Challenge.Application.IoC
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.IoC
 {
     internal static class CommandsRegistry
     {

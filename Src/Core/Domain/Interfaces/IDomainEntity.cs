@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace FIAP.Pos.Tech.Challenge.Domain.Interfaces
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces
 {
     /// <summary>
     /// Interface regulamentando as propriedades e métodos necessários a uma entidade

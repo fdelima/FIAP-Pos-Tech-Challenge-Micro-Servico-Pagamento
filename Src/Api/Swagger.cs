@@ -1,6 +1,6 @@
 ﻿using Microsoft.OpenApi.Models;
 
-namespace FIAP.Pos.Tech.Challenge.Api
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Api
 {
     public static class Swagger
     {

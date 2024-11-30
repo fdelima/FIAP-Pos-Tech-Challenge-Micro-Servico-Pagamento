@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace FIAP.Pos.Tech.Challenge.Domain
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain
 {
     public static class Util
     {

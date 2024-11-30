@@ -1,4 +1,4 @@
-﻿namespace FIAP.Pos.Tech.Challenge.Domain.Models
+﻿namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models
 {
     public class MongoDbSettings
     {

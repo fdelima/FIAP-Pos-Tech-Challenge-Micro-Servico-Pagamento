@@ -1,7 +1,7 @@
-﻿using FIAP.Pos.Tech.Challenge.Domain.Models;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
 using System.Linq.Expressions;
 
-namespace FIAP.Pos.Tech.Challenge.Domain.Interfaces
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces
 {
     /// <summary>
     /// Interface regulamentando os métodos que precisam ser impementados pelos serviços da aplicação

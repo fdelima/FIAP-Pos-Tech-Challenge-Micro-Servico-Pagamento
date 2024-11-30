@@ -1,4 +1,4 @@
-﻿namespace FIAP.Pos.Tech.Challenge.Domain.Messages
+﻿namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Messages
 {
     /// <summary>
     /// Mensagens padrões de validação

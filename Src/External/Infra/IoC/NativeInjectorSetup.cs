@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FIAP.Pos.Tech.Challenge.Infra.IoC
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Infra.IoC
 {
     /// <summary>
     /// Configura a injeção de dependência

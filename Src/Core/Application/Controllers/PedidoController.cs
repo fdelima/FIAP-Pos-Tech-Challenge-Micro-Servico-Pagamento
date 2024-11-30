@@ -1,17 +1,17 @@
-﻿using FIAP.Pos.Tech.Challenge.Application.UseCases.Pedido.Commands;
-using FIAP.Pos.Tech.Challenge.Domain;
-using FIAP.Pos.Tech.Challenge.Domain.Entities;
-using FIAP.Pos.Tech.Challenge.Domain.Interfaces;
-using FIAP.Pos.Tech.Challenge.Domain.Models;
-using FIAP.Pos.Tech.Challenge.Domain.Models.MercadoPago;
-using FIAP.Pos.Tech.Challenge.Domain.Models.Pedido;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Pedido.Commands;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.MercadoPago;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.Pedido;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System.Linq.Expressions;
 
-namespace FIAP.Pos.Tech.Challenge.Application.Controllers
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.Controllers
 {
     /// <summary>
     /// Regras da aplicação referente ao pedido

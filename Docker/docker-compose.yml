@@ -6,7 +6,7 @@ volumes:
   sql_data: {}
 
 services:
-  fiap.pos.tech.challenge.api:
+  FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.api:
     image: fiappostechchallengeapi:stand-alone
     depends_on:
       - mssqltools

@@ -1,11 +1,11 @@
-﻿using FIAP.Pos.Tech.Challenge.Domain;
-using FIAP.Pos.Tech.Challenge.Domain.Extensions;
-using FIAP.Pos.Tech.Challenge.Domain.Interfaces;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Extensions;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Linq.Expressions;
 
-namespace FIAP.Pos.Tech.Challenge.Infra.Gateways
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Infra.Gateways
 {
     /// <summary>
     /// Implementação dos Gateways, classe reponsavel efetivamente pela realização da ação no banco de dados.

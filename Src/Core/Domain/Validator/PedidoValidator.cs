@@ -1,10 +1,10 @@
-﻿using FIAP.Pos.Tech.Challenge.Domain.Entities;
-using FIAP.Pos.Tech.Challenge.Domain.Messages;
-using FIAP.Pos.Tech.Challenge.Domain.Models.Pedido;
-using FIAP.Pos.Tech.Challenge.Domain.ValuesObject;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Messages;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.Pedido;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.ValuesObject;
 using FluentValidation;
 
-namespace FIAP.Pos.Tech.Challenge.Domain.Validator
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Validator
 {
     /// <summary>
     /// Regras de validação da model

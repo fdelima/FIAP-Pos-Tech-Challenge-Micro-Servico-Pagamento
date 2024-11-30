@@ -1,6 +1,6 @@
-﻿using FIAP.Pos.Tech.Challenge.Domain.ValuesObject;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.ValuesObject;
 
-namespace FIAP.Pos.Tech.Challenge.Domain.Models.Pedido
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.Pedido
 {
     public class WebhookPagamento
     {

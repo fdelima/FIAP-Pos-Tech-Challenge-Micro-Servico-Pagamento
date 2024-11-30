@@ -1,7 +1,7 @@
-﻿using FIAP.Pos.Tech.Challenge.Domain.Models;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
 using FluentValidation.Results;
 
-namespace FIAP.Pos.Tech.Challenge.Domain.Interfaces
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces
 {
     /// <summary>
     /// Interface regulamentando as propriedades e métodos necessários a uma entidade

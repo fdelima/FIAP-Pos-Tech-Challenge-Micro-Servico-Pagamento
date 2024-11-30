@@ -1,9 +1,9 @@
-﻿using FIAP.Pos.Tech.Challenge.Domain.Messages;
-using FIAP.Pos.Tech.Challenge.Domain.Models;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Messages;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
 using System.Net;
 using System.Text.Json;
 
-namespace FIAP.Pos.Tech.Challenge.Api
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Api
 {
     public static class ApplicationBuilderExtensions
     {

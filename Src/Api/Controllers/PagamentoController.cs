@@ -1,10 +1,10 @@
-﻿using FIAP.Pos.Tech.Challenge.Domain.Interfaces;
-using FIAP.Pos.Tech.Challenge.Domain.Models;
-using FIAP.Pos.Tech.Challenge.Domain.Models.Pedido;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.Pedido;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace FIAP.Pos.Tech.Challenge.Api.Controllers
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Api.Controllers
 {
     //TODO: Controller :: 1 - Duplicar esta controller de exemplo e trocar o nome da entidade.
     /// <summary>

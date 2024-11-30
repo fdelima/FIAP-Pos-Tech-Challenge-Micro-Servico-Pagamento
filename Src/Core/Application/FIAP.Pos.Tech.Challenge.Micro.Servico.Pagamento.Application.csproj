@@ -12,7 +12,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Domain\FIAP.Pos.Tech.Challenge.Domain.csproj" />
+	  <ProjectReference Include="..\Domain\FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.csproj" />
 	</ItemGroup>
 
 </Project>
