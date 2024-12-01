@@ -1,7 +1,9 @@
 ﻿using Microsoft.OpenApi.Models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Api
 {
+    [ExcludeFromCodeCoverage(Justification = "Arquivo de configuração")]
     public static class Swagger
     {
         static ILogger _logger = App.CreateLogger();

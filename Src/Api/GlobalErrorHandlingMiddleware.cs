@@ -1,16 +1,19 @@
 ﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Messages;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Text.Json;
 
 namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Api
 {
+    [ExcludeFromCodeCoverage(Justification = "Arquivo de configuração")]
     public static class ApplicationBuilderExtensions
     {
         public static IApplicationBuilder AddGlobalErrorHandler(this IApplicationBuilder applicationBuilder)
             => applicationBuilder.UseMiddleware<GlobalErrorHandlingMiddleware>();
     }
 
+    [ExcludeFromCodeCoverage(Justification = "Arquivo de configuração")]
     public class GlobalErrorHandlingMiddleware
     {
         private readonly RequestDelegate _next;
