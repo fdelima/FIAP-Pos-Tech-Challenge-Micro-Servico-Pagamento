@@ -62,7 +62,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Services
             {
                 await _gateway.InsertAsync(notificacao);
                 await _gateway.CommitAsync();
-                return ModelResultFactory.InsertSucessResult<Pedido>(entity);
+                return ModelResultFactory.InsertSucessResult<Pedido>(notificacao);
             }
             else
             {
