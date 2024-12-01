@@ -5,12 +5,12 @@ namespace TestProject.Infra
     public class ApiTestFixture : IDisposable
     {
         const string port = "5000";
-        const string network = "network-producao-test";
+        const string network = "network-pagamento-test";
 
         //api
-        private const string ImageName = "fdelima/fiap-pos-tech-challenge-micro-servico-producao-gurpo-71-api:fase4";
-        private const string DatabaseContainerName = "api-producao-test";
-        private const string DataBaseName = "tech-challenge-micro-servico-producao-grupo-71";
+        private const string ImageName = "fdelima/fiap-pos-tech-challenge-micro-servico-pagamento-gurpo-71-api:fase4";
+        private const string DatabaseContainerName = "api-pagamento-test";
+        private const string DataBaseName = "tech-challenge-micro-servico-pagamento-grupo-71";
         private HttpClient _client;
 
         public ApiTestFixture()

@@ -1,10 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace TestProject.Infra
 {
     public class MongoTestFixture : IDisposable
     {
         //mongo
+        const string network = "network-pagamento-test";
         private const string ImageName = "mongo:latest";
         private const string DataBaseName = "tech-challenge-micro-servico-pagamento-grupo-71";
 
@@ -22,9 +24,12 @@ namespace TestProject.Infra
                     DockerManager.KillContainer(databaseContainerName);
                     DockerManager.KillVolume(databaseContainerName);
 
+                    DockerManager.CreateNetWork(network);
+
                     DockerManager.RunContainerIfIsNotRunning(databaseContainerName,
                         $"run --name {databaseContainerName} " +
                         $"-p {port}:27017 " +
+                        $"--network {network} " + 
                         $"-d {ImageName}");
 
                     Thread.Sleep(3000);

@@ -31,7 +31,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Api.Controllers
         /// <returns>Retorna o result do Pedido cadastrado.</returns>
         /// <response code="200">Pedido encontrado.</response>
         /// <response code="400">Pedido não encontrado.</response>
-        [HttpPatch("Consultar/Pedido/{id}")]
+        [HttpGet("Consultar/Pedido/{id}")]
         [ProducesResponseType(typeof(ModelResult), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(ModelResult), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
