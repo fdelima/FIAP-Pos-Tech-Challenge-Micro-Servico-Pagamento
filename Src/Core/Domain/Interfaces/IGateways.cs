@@ -10,12 +10,6 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces
     public interface IGateways<TEntity> where TEntity : IDomainEntity
     {
         /// <summary>
-        /// Inicia uma transação no banco de dados.
-        /// </summary>
-        /// <returns></returns>
-        public IDbContextTransaction BeginTransaction();
-
-        /// <summary>
         /// Insere o objeto no bd
         /// </summary>
         /// <param name="entity">Objeto relacional do bd mapeado</param>
@@ -26,12 +20,6 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces
         /// </summary>
         /// <param name="entity">Objeto relacional do bd mapeado</param>
         Task<T> InsertAsync<T>(T entity);
-
-        /// <summary>
-        /// Insere os objetos no bd
-        /// </summary>
-        /// <param name="entities">Objetos da entidade relacional do bd mapeado</param>
-        Task InsertRangeAsync(IEnumerable<TEntity> entities);
 
         /// <summary>
         /// Atualiza o objeto no bd

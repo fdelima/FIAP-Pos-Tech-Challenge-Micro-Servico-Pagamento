@@ -62,9 +62,14 @@ namespace TestProject.MockData
                     var idPedido = Guid.NewGuid();
                     pedidos.Add(new Pedido
                     {
-                        IdPedido = idPedido,
+                        IdPedido = Guid.NewGuid(),
+                        IdCliente = Guid.NewGuid(),
                         IdDispositivo = Guid.NewGuid(),
-                        Status = ((enmPedidoStatus)new Random().Next(0, 2)).ToString(),
+                        Data = DateTime.Now,
+                        Status = enmPedidoStatus.RECEBIDO.ToString(),
+                        DataStatusPedido = DateTime.Now,
+                        StatusPagamento = enmPedidoStatusPagamento.PENDENTE.ToString(),
+                        DataStatusPagamento = DateTime.Now
                     });
                 }
                 var param = new PagingQueryParam<Pedido>() { CurrentPage = 1, Take = 10 };
@@ -75,7 +80,6 @@ namespace TestProject.MockData
                     pedidos
                 };
             }
-
         }
 
         /// <summary>

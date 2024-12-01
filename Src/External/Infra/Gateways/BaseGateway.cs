@@ -10,7 +10,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Infra.Gateways
     /// Implementação dos Gateways, classe reponsavel efetivamente pela realização da ação no banco de dados.
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    internal class BaseGateway<TEntity> : IGateways<TEntity> where TEntity : class, IDomainEntity
+    public class BaseGateway<TEntity> : IGateways<TEntity> where TEntity : class, IDomainEntity
     {
         /// <summary>
         /// contexto
@@ -34,15 +34,6 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Infra.Gateways
         }
 
         /// <summary>
-        /// Inicia uma transação no banco de dados.
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks>Share connection and transaction :: https://learn.microsoft.com/en-us/ef/core/saving/transactions</remarks>
-        public IDbContextTransaction BeginTransaction()
-          => Ctx.Database.BeginTransaction();
-
-
-        /// <summary>
         /// Insere o objeto no banco de dados
         /// </summary>
         /// <param name="entity">Objeto relacional do banco de dados mapeado</param>
@@ -60,15 +51,6 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Infra.Gateways
         {
             Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry dbEntry = await Ctx.AddAsync(entity);
             return (T)dbEntry.Entity;
-        }
-
-        /// <summary>
-        /// Insere os objetos no banco de dados
-        /// </summary>
-        /// <param name="entities">Objetos da entidade relacional do banco de dados mapeado</param>
-        public virtual async Task InsertRangeAsync(IEnumerable<TEntity> entities)
-        {
-            await DbSet.AddRangeAsync(entities);
         }
 
         /// <summary>

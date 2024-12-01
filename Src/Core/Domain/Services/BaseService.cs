@@ -24,13 +24,6 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Services
         }
 
         /// <summary>
-        /// Reposnsável por solicitar ao gateway o inicio de uma transação no banco de dados.
-        /// </summary>
-        /// <returns></returns>
-        public IDbContextTransaction BeginTransaction()
-          => _gateway.BeginTransaction();
-
-        /// <summary>
         /// Aplica as regras de validação da entidade
         /// </summary>
         /// <param name="entity">Entidade</param>

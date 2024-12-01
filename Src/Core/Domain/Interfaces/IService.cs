@@ -10,12 +10,6 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces
     public interface IService<TEntity> where TEntity : IDomainEntity
     {
         /// <summary>
-        /// Inicia uma transação no banco de dados.
-        /// </summary>
-        /// <returns></returns>
-        public IDbContextTransaction BeginTransaction();
-
-        /// <summary>
         /// Valida o objeto
         /// </summary>
         /// <param name="entity">Objeto relacional do bd mapeado</param>
