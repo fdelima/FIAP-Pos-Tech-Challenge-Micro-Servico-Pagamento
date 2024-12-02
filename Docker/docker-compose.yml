@@ -9,7 +9,7 @@ services:
   FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.api:
     image: fiappostechchallengemicroservicopagamentoapi:stand-alone
     depends_on:
-      - mssqltools
+      - mongodb
     build:
       context: ../
       dockerfile: Src/Api/Dockerfile
@@ -23,26 +23,9 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    environment:
-      SA_PASSWORD: "SqlServer2019!"
-      ACCEPT_EULA: "Y"
-      MSSQL_PID: "Developer"
+  mongodb:
+    image: mongo:latest
     ports:
-      - "1433:1433"
-    healthcheck:
-      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-Usa", "-PSqlServer2019!", "-Q", "SELECT NAME FROM SYS.DATABASES"]
-      interval: 10s
-      retries: 20
+      - "27017:27017"
     volumes:
-      - sql_data:/var/opt/mssql
-  mssqltools:
-    image: mcr.microsoft.com/mssql-tools
-    depends_on:
-      - sqlserver
-    volumes:
-      - ../../FIAP-Pos-Tech-Challenge-Infra-Bd/Src/init-database.sh:/tmp/init-database.sh
-      - ../../FIAP-Pos-Tech-Challenge-Infra-Bd/Src/tech-challenge-mer-1.sql:/tmp/tech-challenge-mer-1.sql
-      - ../../FIAP-Pos-Tech-Challenge-Infra-Bd/Src/tech-challenge-mer-2.sql:/tmp/tech-challenge-mer-2.sql
-    command: /bin/bash ./tmp/init-database.sh  
+      - sql_data:/data/db
