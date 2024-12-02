@@ -271,6 +271,23 @@ namespace TestProject.IntegrationTest.External
             Assert.True(result.Content.Any());
         }
 
+
+        /// <summary>
+        /// Testa metodo base de lista pedidos
+        /// </summary>
+        [Fact]
+        public async Task Listar()
+        {
+            ///Arrange
+            var _pedidoGateway = new BaseGateway<Pedido>(_mongoTestFixture.GetDbContext());
+
+            //Act
+            var result = await _pedidoGateway.GetItemsAsync();
+
+            //Assert
+            Assert.True(result.Content.Any());
+        }
+
         #region [ Xunit MemberData ]
 
         /// <summary>

@@ -78,16 +78,6 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Infra.Gateways
         }
 
         /// <summary>
-        /// Atualiza o objeto no banco de dados
-        /// </summary>
-        /// <param name="entities">Objetos relacionais do banco de dados mapeado</param>
-        public virtual async Task UpdateRangeAsync(IEnumerable<TEntity> entities)
-        {
-            foreach (TEntity entity in entities)
-                await UpdateAsync(entity);
-        }
-
-        /// <summary>
         /// Deleta os registro do banco de dados de acordo com a condição informada
         /// </summary>
         /// <param name="expression">condição</param>
@@ -216,34 +206,6 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Infra.Gateways
             else
             {
                 items = await SortQuery(DbSet, filter, sortProp).AsNoTracking().Where(whereExpression).ToListAsync();
-            }
-
-            return new PagingQueryResult<TEntity>(items, count, filter.Take);
-
-        }
-
-        /// <summary>
-        /// Retorna os objetos que atendem a expression do bd
-        /// </summary>
-        /// <param name="filter">condição</param>
-        /// <param name="tableInclude">Tabela a ser incluida</param>
-        /// <param name="whereExpression">Condição que filtra os itens a serem retornados</param>
-        public virtual async ValueTask<PagingQueryResult<TEntity>> GetItemsAsync<TEntityToInclude>(
-            IPagingQueryParam filter,
-            Expression<Func<TEntity, ICollection<TEntityToInclude>>> tableInclude,
-            Expression<Func<TEntity, bool>> whereExpression,
-            Expression<Func<TEntity, object>> sortProp)
-        {
-            int count = await DbSet.Include(tableInclude).Where(whereExpression).CountAsync();
-            List<TEntity> items;
-            if (filter.CurrentPage > 0 && filter.Take > 0)
-            {
-                int skipItems = (filter.CurrentPage - 1) * filter.Take;
-                items = await SortQuery(DbSet, filter, sortProp).Include(tableInclude).AsNoTracking().Where(whereExpression).Skip(skipItems).Take(filter.Take).ToListAsync();
-            }
-            else
-            {
-                items = await SortQuery(DbSet, filter, sortProp).Include(tableInclude).AsNoTracking().Where(whereExpression).ToListAsync();
             }
 
             return new PagingQueryResult<TEntity>(items, count, filter.Take);

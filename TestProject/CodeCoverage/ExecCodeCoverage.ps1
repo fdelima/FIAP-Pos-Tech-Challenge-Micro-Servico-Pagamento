@@ -4,16 +4,24 @@
 # If running outside the test folder
 #cd E:\Dev\XYZ\src\XYZTestProject
 
-$path = "TestResults"
+$path = "..\TestResults"
 If(!(test-path -PathType container $path))
 {
     New-Item -ItemType Directory -Path $path
+}
+else
+{
+    Remove-Item $path -Recurse -Force
 }
 
 $path = "Report"
 If(!(test-path -PathType container $path))
 {
     New-Item -ItemType Directory -Path $path
+}
+else
+{
+    Remove-Item $path -Recurse -Force
 }
 
 $path = "History"
@@ -22,20 +30,19 @@ If(!(test-path -PathType container $path))
     # This only needs to be installed once (globally), if installed it fails silently: 
     dotnet tool install -g dotnet-reportgenerator-globaltool
 }
+else
+{
+    Remove-Item -Path $path -Recurse -Include *.*
+    #Get-ChildItem -Path $path -Include *.* -Recurse | foreach { $_.Delete()}
+}
 
 # Save currect directory into a variable
 $dir = pwd
-
-# Delete previous test run results (there's a bunch of subfolders named with guids)
-Remove-Item -Recurse -Force $dir/TestResults/
 
 # Run the Coverlet.Collector - REPLACING YOUR SOLUTION NAME!!!
 $output = [string] (& dotnet test ../../FIAP-Pos-Tech-Challenge-Micro-Servico-Pagamento.sln --collect:"XPlat Code Coverage" 2>&1)
 Write-Host "Last Exit Code: $lastexitcode"
 Write-Host $output
-
-# Delete previous test run reports - note if you're getting wrong results do a Solution Clean and Rebuild to remove stale DLLs in the bin folder
-Remove-Item -Recurse -Force $dir/Report/
 
 # To keep a history of the Code Coverage we need to use the argument: -historydir:SOME_DIRECTORY 
 if (!(Test-Path -path $dir/History)) {  

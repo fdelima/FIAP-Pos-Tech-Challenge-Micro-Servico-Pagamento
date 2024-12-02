@@ -1,5 +1,8 @@
-﻿namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Messages
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Messages
 {
+    [ExcludeFromCodeCoverage(Justification = "Arquivo de configuração")]
     /// <summary>
     /// Mensagens de erro do sistema
     /// </summary>

@@ -1,8 +1,13 @@
-﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Pedido.Commands;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.MercadoPago.Commands;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.MercadoPago.Handlers;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Pedido.Commands;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Pedido.Handlers;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.MercadoPago;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 using NSubstitute;
 using TestProject.MockData;
 
@@ -128,6 +133,55 @@ namespace TestProject.UnitTest.Aplication
 
             //Act
             var handler = new PedidoConsultarPagamentoHandler(_service);
+            var result = await handler.Handle(command, CancellationToken.None);
+
+            //Assert
+            Assert.True(result.IsValid);
+        }
+
+        /// <summary>
+        /// Testa recebimento do webhook de pagamento
+        /// </summary>
+        [Theory]
+        [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
+        public async Task MercadoPagoWebhook(Guid idPedido, Guid idDispositivo, Guid idCliente,
+            DateTime data, string status, DateTime dataStatusPedido,
+            string statusPagamento, DateTime dataStatusPagamento)
+        {
+            ///Arrange            
+            var pedido = new Pedido
+            {
+                IdPedido = idPedido,
+                IdDispositivo = idDispositivo,
+                IdCliente = idCliente,
+                Data = data,
+                Status = status,
+                DataStatusPedido = dataStatusPedido,
+                StatusPagamento = statusPagamento,
+                DataStatusPagamento = dataStatusPagamento
+            };
+
+            var notificacao = new MercadoPagoWebhoockModel
+            {
+                Id = 1,
+                Action = "RECEBIMENTO VIA CARTÃO DE CRÉDITO",
+                ApiVersion = "1.0",
+                Data = new Data { Id = pedido.IdPedido.ToString() },
+                DateCreated = DateTime.Now,
+                LiveMode = true,
+                Type = "RECEBIMENTO",
+                UserId = 1
+            };
+
+
+            var command = new MercadoPagoWebhoockCommand((MercadoPagoWebhoock)notificacao, idPedido);
+
+            //Mockando retorno do serviço de domínio.
+            _service.MercadoPagoWebhoock(Arg.Any<MercadoPagoWebhoock>(), Arg.Any<Guid>())
+                .Returns(Task.FromResult(ModelResultFactory.InsertSucessResult<MercadoPagoWebhoock>((MercadoPagoWebhoock)notificacao)));
+
+            //Act
+            var handler = new MercadoPagoWebhoockHandler(_service);
             var result = await handler.Handle(command, CancellationToken.None);
 
             //Assert

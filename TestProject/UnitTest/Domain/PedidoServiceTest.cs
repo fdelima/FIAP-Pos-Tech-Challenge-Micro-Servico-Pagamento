@@ -3,6 +3,7 @@ using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Extensions;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.MercadoPago;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Services;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Validator;
 using FluentValidation;
@@ -60,6 +61,38 @@ namespace TestProject.UnitTest.Domain
 
             //Act
             var result = await domainService.InsertAsync(pedido);
+
+            //Assert
+            Assert.True(result.IsValid);
+        }
+
+        /// <summary>
+        /// Testa a inserção com dados válidos
+        /// </summary>
+        [Theory]
+        [MemberData(nameof(ObterDados), enmTipo.Inclusao, true, 3)]
+        public async Task ReceberPedido(Guid idPedido, Guid idDispositivo, Guid idCliente,
+            DateTime data, string status, DateTime dataStatusPedido,
+            string statusPagamento, DateTime dataStatusPagamento)
+        {
+            ///Arrange            
+            var pedido = new Pedido
+            {
+                IdPedido = idPedido,
+                IdDispositivo = idDispositivo,
+                IdCliente = idCliente,
+                Data = data,
+                Status = status,
+                DataStatusPedido = dataStatusPedido,
+                StatusPagamento = statusPagamento,
+                DataStatusPagamento = dataStatusPagamento
+
+            };
+
+            var domainService = new PedidoService(_gatewayPedidoMock, _validator, _notificacaoGatewayMock, _mercadoPagoWebhoockGatewayMock);
+
+            //Act
+            var result = await domainService.ReceberPedido(pedido);
 
             //Assert
             Assert.True(result.IsValid);
@@ -244,6 +277,92 @@ namespace TestProject.UnitTest.Domain
 
             //Act
             var result = await domainService.FindByIdAsync(idPedido);
+
+            //Assert
+            Assert.True(result.IsValid);
+        }
+
+
+        /// <summary>
+        /// Testa a consulta de pagamento do pedido
+        /// </summary>
+        [Theory]
+        [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
+        public async Task ConsultarPagamento(Guid idPedido, Guid idDispositivo, Guid idCliente,
+            DateTime data, string status, DateTime dataStatusPedido,
+            string statusPagamento, DateTime dataStatusPagamento)
+        {
+            ///Arrange            
+            var pedido = new Pedido
+            {
+                IdPedido = idPedido,
+                IdDispositivo = idDispositivo,
+                IdCliente = idCliente,
+                Data = data,
+                Status = status,
+                DataStatusPedido = dataStatusPedido,
+                StatusPagamento = statusPagamento,
+                DataStatusPagamento = dataStatusPagamento
+
+            };
+
+            var domainService = new PedidoService(_gatewayPedidoMock, _validator, _notificacaoGatewayMock, _mercadoPagoWebhoockGatewayMock);
+
+            //Mockando retorno do metodo interno do FindByIdAsync
+            _gatewayPedidoMock.FindByIdAsync(idPedido)
+                .Returns(new ValueTask<Pedido>(pedido));
+
+            //Act
+            var result = await domainService.ConsultarPagamentoAsync(idPedido);
+
+            //Assert
+            Assert.True(result.IsValid);
+        }
+
+
+        /// <summary>
+        /// Testa a consulta de pagamento do pedido
+        /// </summary>
+        [Theory]
+        [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
+        public async Task MercadoPagoWebhook(Guid idPedido, Guid idDispositivo, Guid idCliente,
+            DateTime data, string status, DateTime dataStatusPedido,
+            string statusPagamento, DateTime dataStatusPagamento)
+        {
+            ///Arrange            
+            var pedido = new Pedido
+            {
+                IdPedido = idPedido,
+                IdDispositivo = idDispositivo,
+                IdCliente = idCliente,
+                Data = data,
+                Status = status,
+                DataStatusPedido = dataStatusPedido,
+                StatusPagamento = statusPagamento,
+                DataStatusPagamento = dataStatusPagamento
+
+            };
+
+            var notificacao = new MercadoPagoWebhoockModel
+            {
+                Id = 1,
+                Action = "RECEBIMENTO VIA CARTÃO DE CRÉDITO",
+                ApiVersion = "1.0",
+                Data = new Data { Id = pedido.IdPedido.ToString() },
+                DateCreated = DateTime.Now,
+                LiveMode = true,
+                Type = "RECEBIMENTO",
+                UserId = 1
+            };
+
+            var domainService = new PedidoService(_gatewayPedidoMock, _validator, _notificacaoGatewayMock, _mercadoPagoWebhoockGatewayMock);
+
+            //Mockando retorno do metodo interno do FindByIdAsync
+            _gatewayPedidoMock.FindByIdAsync(idPedido)
+                .Returns(new ValueTask<Pedido>(pedido));
+
+            //Act
+            var result = await domainService.MercadoPagoWebhoock((MercadoPagoWebhoock)notificacao, idPedido);
 
             //Assert
             Assert.True(result.IsValid);

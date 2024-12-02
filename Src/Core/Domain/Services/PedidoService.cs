@@ -46,7 +46,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Services
         /// <summary>
         ///  Regra de Webhook para notificação de pagamento.
         /// </summary>
-        public async Task<ModelResult> ReceberPedido(Pedido notificacao, string[]? businessRules)
+        public async Task<ModelResult> ReceberPedido(Pedido notificacao, string[]? businessRules = null)
         {
             ModelResult ValidatorResult = new ModelResult();
 
@@ -70,7 +70,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Services
             }
         }
 
-        public async Task<ModelResult> MercadoPagoWebhoock(MercadoPagoWebhoock notificacao, Guid idPedido, string[]? businessRules)
+        public async Task<ModelResult> MercadoPagoWebhoock(MercadoPagoWebhoock notificacao, Guid idPedido, string[]? businessRules = null)
         {
             ModelResult ValidatorResult = new ModelResult();
 

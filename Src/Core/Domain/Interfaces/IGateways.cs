@@ -35,12 +35,6 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces
         Task UpdateAsync(TEntity oldEntity, TEntity NewEntity);
 
         /// <summary>
-        /// Atualiza os objetos no bd
-        /// </summary>
-        /// <param name="entities">Objetos relacionais do bd mapeado</param>
-        Task UpdateRangeAsync(IEnumerable<TEntity> entities);
-
-        /// <summary>
         /// Deleta os registro do bd de acordo com a condição informada
         /// </summary>
         /// <param name="expression">condição</param>
@@ -94,18 +88,6 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces
         /// <param name="whereExpression">Condição que filtra os itens a serem retornados</param>
         /// <param name="filter">filtro a ser aplicado</param>
         ValueTask<PagingQueryResult<TEntity>> GetItemsAsync(IPagingQueryParam filter,
-            Expression<Func<TEntity, bool>> whereExpression,
-            Expression<Func<TEntity, object>> sortProp);
-
-        /// <summary>
-        /// Retorna os objetos que atendem a expression do bd
-        /// </summary>
-        /// <param name="filter">condição</param>
-        /// <param name="tableInclude">Tabela a ser incluida</param>
-        /// <param name="whereExpression">Condição que filtra os itens a serem retornados</param>
-        ValueTask<PagingQueryResult<TEntity>> GetItemsAsync<TEntityToInclude>(
-            IPagingQueryParam filter,
-            Expression<Func<TEntity, ICollection<TEntityToInclude>>> tableInclude,
             Expression<Func<TEntity, bool>> whereExpression,
             Expression<Func<TEntity, object>> sortProp);
 
