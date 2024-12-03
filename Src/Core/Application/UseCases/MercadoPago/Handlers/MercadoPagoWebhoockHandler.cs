@@ -28,7 +28,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.M
                     var producaoClient = Util.GetClient(command.MicroServicoPedidoBaseAdress);
 
                     HttpResponseMessage response =
-                     await producaoClient.PutAsJsonAsync($"api/Pedido/ReceberStatusPagamento/{command.IdPedido}", enmPedidoStatusPagamento.APROVADO);
+                     await producaoClient.PutAsJsonAsync($"api/Pedido/ReceberStatusPagamento?id={command.IdPedido}&statusPagamento={enmPedidoStatusPagamento.APROVADO}", command.Entity);
 
                     if (!response.IsSuccessStatusCode)
                         result.AddMessage("Não foi possível enviar status do pagamento do pedido.");
