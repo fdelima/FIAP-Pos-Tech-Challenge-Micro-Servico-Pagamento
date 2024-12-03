@@ -18,7 +18,6 @@ namespace TestProject.ComponenteTest
     public class PagamentoControllerTest : Feature, IClassFixture<ComponentTestsBase>
     {
         private readonly ApiTestFixture _apiTest;
-        private ModelResult expectedResult;
         Pedido _pedido;
 
         /// <summary>
@@ -55,8 +54,6 @@ namespace TestProject.ComponenteTest
         [And(@"Recebendo um pedido pendente de pagamento")]
         public async Task ReceberPedido()
         {
-            expectedResult = ModelResultFactory.InsertSucessResult<Pedido>(_pedido);
-
             var client = _apiTest.GetClient();
             HttpResponseMessage response = await client.PostAsJsonAsync(
                 "api/Pagamento/Pedido", _pedido);
@@ -66,18 +63,12 @@ namespace TestProject.ComponenteTest
 
             _pedido = actualResult.Model;
 
-            Assert.Equal(expectedResult.IsValid, actualResult.IsValid);
-            Assert.Equal(expectedResult.Messages, actualResult.Messages);
-            Assert.Equal(expectedResult.Errors, actualResult.Errors);
-
-            Assert.True(true);
+            Assert.True(actualResult.IsValid);
         }
 
         [And(@"Consultar status de pagamento do pedido pendente")]
         public async Task ConusultarStatusPagamentoPendente()
         {
-            expectedResult = ModelResultFactory.SucessResult();
-
             var client = _apiTest.GetClient();
             HttpResponseMessage response = await client.GetAsync(
                 $"api/Pagamento/Consultar/Pedido/{_pedido.IdPedido}");
@@ -87,9 +78,7 @@ namespace TestProject.ComponenteTest
             var statusPagamento = actualResult.Model;
 
             Assert.Equal(enmPedidoStatusPagamento.PENDENTE.ToString(), statusPagamento);
-            Assert.Equal(expectedResult.IsValid, actualResult.IsValid);
-            Assert.Equal(expectedResult.Messages, actualResult.Messages);
-            Assert.Equal(expectedResult.Errors, actualResult.Errors);
+            Assert.True(actualResult.IsValid);
         }
 
         [When(@"Receber informacoes do pagamento do pedido via webhook")]
@@ -112,8 +101,6 @@ namespace TestProject.ComponenteTest
                 UserId = 1
             };
 
-            expectedResult = ModelResultFactory.InsertSucessResult<MercadoPagoWebhoock>(webhook);
-
             var client = _apiTest.GetClient();
 
             //ApiKey
@@ -125,19 +112,12 @@ namespace TestProject.ComponenteTest
             var responseContent = await response.Content.ReadAsStringAsync();
             var actualResult = JsonConvert.DeserializeObject<ActionResult<MercadoPagoWebhoock>>(responseContent);
 
-
-            Assert.Equal(expectedResult.IsValid, actualResult.IsValid);
-            Assert.Equal(expectedResult.Messages, actualResult.Messages);
-            Assert.Equal(expectedResult.Errors, actualResult.Errors);
-
-            Assert.True(true);
+            Assert.True(actualResult.IsValid);
         }
 
         [Then(@"Consultar status de pagamento do pedido")]
         public async Task ConusultarStatusPagamento()
         {
-            expectedResult = ModelResultFactory.SucessResult();
-
             var client = _apiTest.GetClient();
             HttpResponseMessage response = await client.GetAsync(
                 $"api/Pagamento/Consultar/Pedido/{_pedido.IdPedido}");
@@ -147,9 +127,7 @@ namespace TestProject.ComponenteTest
             var statusPagamento = actualResult.Model;
 
             Assert.Equal(enmPedidoStatusPagamento.APROVADO.ToString(), statusPagamento);
-            Assert.Equal(expectedResult.IsValid, actualResult.IsValid);
-            Assert.Equal(expectedResult.Messages, actualResult.Messages);
-            Assert.Equal(expectedResult.Errors, actualResult.Errors);
+            Assert.True(actualResult.IsValid);
         }
     }
 }

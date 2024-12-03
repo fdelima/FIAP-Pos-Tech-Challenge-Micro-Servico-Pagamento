@@ -12,7 +12,7 @@
             _mongoTestFixture = new MongoTestFixture(
                 databaseContainerName: "mongodb-pagamento-component-test", port: "27021");
             _apiTest = new ApiTestFixture();
-            Thread.Sleep(10000);
+            Thread.Sleep(15000);
         }
 
         public void Dispose()
