@@ -6,8 +6,6 @@ using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.MercadoPago;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
 using NSubstitute;
 using TestProject.MockData;
 
@@ -19,6 +17,7 @@ namespace TestProject.UnitTest.Aplication
     public partial class PedidoUseCasesTest
     {
         private readonly IPedidoService _service;
+        private const string microServicoPedidoBaseAdress = "http://localhost:8080/";
 
         /// <summary>
         /// Construtor da classe de teste.
@@ -174,7 +173,7 @@ namespace TestProject.UnitTest.Aplication
             };
 
 
-            var command = new MercadoPagoWebhoockCommand((MercadoPagoWebhoock)notificacao, idPedido);
+            var command = new MercadoPagoWebhoockCommand((MercadoPagoWebhoock)notificacao, idPedido, microServicoPedidoBaseAdress);
 
             //Mockando retorno do serviço de domínio.
             _service.MercadoPagoWebhoock(Arg.Any<MercadoPagoWebhoock>(), Arg.Any<Guid>())

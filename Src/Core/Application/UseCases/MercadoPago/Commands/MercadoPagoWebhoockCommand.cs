@@ -8,15 +8,18 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.M
     {
         public MercadoPagoWebhoockCommand(MercadoPagoWebhoock entity,
             Guid idPedido,
+            string microServicoPedidoBaseAdress,
             string[]? businessRules = null)
         {
             Entity = entity;
             IdPedido = idPedido;
+            MicroServicoPedidoBaseAdress = microServicoPedidoBaseAdress;
             BusinessRules = businessRules;
         }
 
         public MercadoPagoWebhoock Entity { get; private set; }
         public Guid IdPedido { get; private set; }
+        public string MicroServicoPedidoBaseAdress { get; private set; }
         public string[]? BusinessRules { get; private set; }
     }
 }

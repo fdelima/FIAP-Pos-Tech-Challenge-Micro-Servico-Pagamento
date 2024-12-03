@@ -94,7 +94,9 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.Controller
             else if (!headers["client_id"].Equals(_configuration["WebhookClientAutorized"]))
                 warnings.Add("Consumidor não autorizado e/ou inválido!");
 
-            MercadoPagoWebhoockCommand command = new(notificacao, idPedido, warnings.ToArray());
+            MercadoPagoWebhoockCommand command =
+                new(notificacao, idPedido, _configuration["micro-servico-pedido-baseadress"] ?? "", warnings.ToArray());
+            
             return await _mediator.Send(command);
         }
     }
