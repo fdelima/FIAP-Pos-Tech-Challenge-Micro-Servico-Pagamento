@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using System.Net;
 
 namespace TestProject.Infra
 {
@@ -15,7 +14,7 @@ namespace TestProject.Infra
         public MongoTestFixture(string databaseContainerName, string port)
         {
             if (DockerManager.UseDocker())
-            {               
+            {
                 if (!DockerManager.ContainerIsRunning(databaseContainerName))
                 {
                     _port = port;
@@ -29,7 +28,7 @@ namespace TestProject.Infra
                     DockerManager.RunContainerIfIsNotRunning(databaseContainerName,
                         $"run --name {databaseContainerName} " +
                         $"-p {port}:27017 " +
-                        $"--network {network} " + 
+                        $"--network {network} " +
                         $"-d {ImageName}");
 
                     Thread.Sleep(3000);

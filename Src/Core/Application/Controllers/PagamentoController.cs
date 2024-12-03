@@ -96,7 +96,7 @@ namespace FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.Controller
 
             MercadoPagoWebhoockCommand command =
                 new(notificacao, idPedido, _configuration["micro-servico-pedido-baseadress"] ?? "", warnings.ToArray());
-            
+
             return await _mediator.Send(command);
         }
     }

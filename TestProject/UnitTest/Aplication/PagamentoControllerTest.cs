@@ -1,21 +1,16 @@
 ﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.Controllers;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.MercadoPago.Commands;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Application.UseCases.Pedido.Commands;
-using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
-using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Extensions;
-using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.MercadoPago;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Validator;
-using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.ValuesObject;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 using NSubstitute;
-using System.Linq.Expressions;
 using TestProject.MockData;
 
 namespace TestProject.UnitTest.Aplication

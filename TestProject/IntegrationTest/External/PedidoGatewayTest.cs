@@ -1,12 +1,12 @@
 ﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
+using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Extensions;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Interfaces;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.ValuesObject;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Infra.Gateways;
 using System.Linq.Expressions;
 using TestProject.Infra;
 using TestProject.MockData;
-using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Extensions;
 
 namespace TestProject.IntegrationTest.External
 {
@@ -205,7 +205,7 @@ namespace TestProject.IntegrationTest.External
         {
             ///Arrange
             var _pedidoGateway = new BaseGateway<Pedido>(_mongoTestFixture.GetDbContext());
-            
+
             foreach (var pedido in pedidos)
             {
                 await _pedidoGateway.InsertAsync(pedido);

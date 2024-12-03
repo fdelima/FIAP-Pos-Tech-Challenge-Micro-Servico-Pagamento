@@ -1,5 +1,4 @@
-﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain;
-using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
+﻿using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Entities;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.Models.MercadoPago;
 using FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.Domain.ValuesObject;
@@ -119,7 +118,7 @@ namespace TestProject.ComponenteTest
 
             //ApiKey
             client.DefaultRequestHeaders.Add("client_id", "70F3C2F7-E239-4DFB-9482-46BCDB47F7B1");
-            
+
             HttpResponseMessage response = await client.PostAsJsonAsync(
                 "api/Pagamento/MercadoPagoWebhoock", webhook);
 
