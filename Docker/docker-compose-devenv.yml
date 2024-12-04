@@ -1,0 +1,18 @@
+version: '3.4'
+volumes:
+  sql_data: {}
+
+services:
+  FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.api:
+    image: ${DOCKER_REGISTRY-}fiappostechchallengemicroservicopagamentoapi
+    depends_on:
+      - mongodb
+    build:
+      context: ../
+      dockerfile: Src/Api/Dockerfile
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - sql_data:/data/db

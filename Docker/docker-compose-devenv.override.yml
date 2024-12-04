@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  FIAP.Pos.Tech.Challenge.Micro.Servico.Pagamento.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8086
+      - ASPNETCORE_HTTPS_PORTS=8087
+    ports:
+      - "8086"
+      - "8087"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
